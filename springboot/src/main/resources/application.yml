@@ -1,3 +1,4 @@
+# tomcat端口
 server:
   port: 9090
 
@@ -6,9 +7,9 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root   #你本地的数据库用户名
-    password: 123456 #你本地的数据库密码
+    password: root #你本地的数据库密码
     url: jdbc:mysql://localhost:3306/manager?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
-  servlet:
+  servlet: # 文件请求下载限制
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
@@ -19,13 +20,13 @@ mybatis:
   type-aliases-package: com.example.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true # 开启数据库自动映射驼峰 如数据库time_range->timeRange(java)
 
-# 分页
+# 分页配置
 pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
 
-ip: localhost
+ip: localhost # 服务器ip,本地为localhost

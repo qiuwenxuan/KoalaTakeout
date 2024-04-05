@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * 管理员业务处理
+ * service层注解：
+ *  @Service： 标识该层为service层
  **/
 @Service
 public class AdminService {
@@ -85,6 +87,7 @@ public class AdminService {
      * 分页查询
      */
     public PageInfo<Admin> selectPage(Admin admin, Integer pageNum, Integer pageSize) {
+        // 调用分页插件PageHelper，开启分页startPage()
         PageHelper.startPage(pageNum, pageSize);
         List<Admin> list = adminMapper.selectAll(admin);
         return PageInfo.of(list);
@@ -92,6 +95,11 @@ public class AdminService {
 
     /**
      * 登录
+     *  1、判断用户名是否存在
+     *  2、判断密码是否正确
+     *  3、生成token
+     *      tokenData是由用户的id-name结构组成
+     *      使用user的密码password动态的作为token的加密秘钥
      */
     public Account login(Account account) {
         Account dbAdmin = adminMapper.selectByUsername(account.getUsername());

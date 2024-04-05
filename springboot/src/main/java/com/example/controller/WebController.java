@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * 基础前端接口
+ * 基础前端接口（登录、注册、修改密码）
  */
 @RestController
 public class WebController {
@@ -45,6 +45,7 @@ public class WebController {
      */
     @PostMapping("/register")
     public Result register(@RequestBody Account account) {
+        // 首先判断用户名和密码不为空
         if (StrUtil.isBlank(account.getUsername()) || StrUtil.isBlank(account.getPassword())
                 || ObjectUtil.isEmpty(account.getRole())) {
             return Result.error(ResultCodeEnum.PARAM_LOST_ERROR);

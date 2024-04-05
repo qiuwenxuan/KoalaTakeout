@@ -1,5 +1,9 @@
 package com.example.common.enums;
 
+/**
+ *定义状态码的枚举类
+ *
+ **/
 public enum ResultCodeEnum {
     SUCCESS("200", "成功"),
 

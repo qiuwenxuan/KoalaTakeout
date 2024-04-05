@@ -21,6 +21,9 @@ import java.util.Date;
 
 /**
  * Token工具类
+ *
+ * @Component： 用于标识一个类为 Spring 组件，表示该类将由 Spring 容器进行管理。
+ * @PostConstruct： 用于标识一个方法为初始化方法，表示在实例化该类后，Spring 容器会自动调用该方法。标记的方法通常可以用来进行一些初始化操作
  */
 @Component
 public class TokenUtils {
@@ -34,6 +37,7 @@ public class TokenUtils {
 
     @PostConstruct
     public void setUserService() {
+        // 当创建TokenUtils类实例时，自动调用setUserService方法将注入的AdminService对象赋值给静态变量staticAdminService
         staticAdminService = adminService;
     }
 
@@ -43,7 +47,7 @@ public class TokenUtils {
     public static String createToken(String data, String sign) {
         return JWT.create().withAudience(data) // 将 userId-role 保存到 token 里面,作为载荷
                 .withExpiresAt(DateUtil.offsetHour(new Date(), 2)) // 2小时后token过期
-                .sign(Algorithm.HMAC256(sign)); // 以 password 作为 token 的密钥
+                .sign(Algorithm.HMAC256(sign)); // 以 password动态的 作为 token 的密钥，使用HMAC256加密方式
     }
 
     /**
@@ -54,6 +58,7 @@ public class TokenUtils {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader(Constants.TOKEN);
             if (ObjectUtil.isNotEmpty(token)) {
+                // 将token解密
                 String userRole = JWT.decode(token).getAudience().get(0);
                 String userId = userRole.split("-")[0];  // 获取用户id
                 String role = userRole.split("-")[1];    // 获取角色
@@ -64,7 +69,7 @@ public class TokenUtils {
         } catch (Exception e) {
             log.error("获取当前用户信息出错", e);
         }
-        return new Account();  // 返回空的账号对象
+        return new Account();  // 查询失败返回空的账号对象
     }
 }
 

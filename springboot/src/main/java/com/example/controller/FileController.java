@@ -21,6 +21,7 @@ import java.util.List;
 public class FileController {
 
     // 文件上传存储路径
+    // System.getProperty("user.dir")获取当前项目根目录/KaolaTakeout
     private static final String filePath = System.getProperty("user.dir") + "/files/";
 
     @Value("${server.port:9090}")
@@ -35,10 +36,13 @@ public class FileController {
     @PostMapping("/upload")
     public Result upload(MultipartFile file) {
         String flag;
+
+        // 通过时间戳获取文件唯一标识，需要加锁防止并发错误
         synchronized (FileController.class) {
             flag = System.currentTimeMillis() + "";
             ThreadUtil.sleep(1L);
         }
+        // 获取文件原始名字
         String fileName = file.getOriginalFilename();
         try {
             if (!FileUtil.isDirectory(filePath)) {
@@ -52,6 +56,7 @@ public class FileController {
             System.err.println(fileName + "--文件上传失败");
         }
         String http = "http://" + ip + ":" + port + "/files/";
+        // 拼接文件下载路径并返回文件下载地址
         return Result.success(http + flag + "-" + fileName);  //  http://localhost:9090/files/1697438073596-avatar.png
     }
 
@@ -67,6 +72,7 @@ public class FileController {
         OutputStream os;
         try {
             if (StrUtil.isNotEmpty(flag)) {
+                // 如果找到了匹配的文件名，则设置响应头，告诉浏览器将文件作为附件进行下载。
                 response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(flag, "UTF-8"));
                 response.setContentType("application/octet-stream");
                 byte[] bytes = FileUtil.readBytes(filePath + flag);

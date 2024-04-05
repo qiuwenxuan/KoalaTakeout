@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * jwt拦截器
+ * jwt拦截器：
+ * 1、从响应头或响应体拿到token,并通过token的role角色查询对应的表，通过userId返回表内的用户对象
+ * 2、通过用户对象的密码password生成JWTVerifier加密对象，如果token内解析的password与JWTVerifier对象预期的一致，则token验证通过
  */
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
@@ -43,26 +45,28 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (ObjectUtil.isEmpty(token)) {
             throw new CustomException(ResultCodeEnum.TOKEN_INVALID_ERROR);
         }
+        // Account是所有用户的基类
         Account account = null;
         try {
             // 解析token获取存储的数据
-            String userRole = JWT.decode(token).getAudience().get(0);
+            String userRole = JWT.decode(token).getAudience().get(0); // JWT.decode(token)用于解码 JWT Token，getAudience().get(0)是从 JWT 的 Payload（负载）中获取 Audience(这里的 Audience 字段被用来存储用户角色信息)
             String userId = userRole.split("-")[0];
             String role = userRole.split("-")[1];
-            // 根据userId查询数据库
+            // 根据userId查询数据库，如果解析的token内的用户角色是Admin,则根据userId查询admin数据库信息并返回account对象
             if (RoleEnum.ADMIN.name().equals(role)) {
                 account = adminService.selectById(Integer.valueOf(userId));
             }
         } catch (Exception e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);
         }
+        // 如果数据库返回对象为空，则说明没有admin这个角色，返回用户不存在
         if (ObjectUtil.isNull(account)) {
             throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
         }
         try {
             // 用户密码加签验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(account.getPassword())).build();
-            jwtVerifier.verify(token); // 验证token
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(account.getPassword())).build(); // 通过HMAC256算法将用户的password加密并返回个JWTVerifier对象
+            jwtVerifier.verify(token); // 验证token内是否与HMAC256加密算法内的Password一致
         } catch (JWTVerificationException e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);
         }
