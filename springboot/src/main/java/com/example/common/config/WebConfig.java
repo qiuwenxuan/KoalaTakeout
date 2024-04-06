@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 当接口为/login（登录）、/register(注册)、/file文件下载时不需要验证token(及登录，注册时都没有生成token，文件下载时生成token会比较麻烦)
         registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/files/**");
