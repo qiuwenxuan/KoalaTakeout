@@ -7,8 +7,8 @@
         insert into business
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="userName != null">username,</if>
-            <if test="passWord != null">password,</if>
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
             <if test="name != null">name,</if>
             <if test="avatar != null">avatar,</if>
             <if test="role != null">role,</if>
@@ -22,8 +22,8 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="userName != null">#{userName},</if>
-            <if test="passWord != null">#{passWord},</if>
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
             <if test="name != null">#{name},</if>
             <if test="avatar != null">#{avatar},</if>
             <if test="role != null">#{role},</if>
@@ -44,8 +44,8 @@
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="userName != null">
-                and username = #{userName}
+            <if test="username != null">
+                and username = #{username}
             </if>
         </where>
         order by id

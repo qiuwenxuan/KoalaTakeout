@@ -5,8 +5,8 @@ package com.example.entity;
  **/
 public class Business {
     private Integer id;
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
     private String name;
     private String avatar;
     private String role;
@@ -27,19 +27,19 @@ public class Business {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getPassWord() {
-        return passWord;
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassWord(String password) {
+        this.password = password;
     }
 
     public String getName() {
