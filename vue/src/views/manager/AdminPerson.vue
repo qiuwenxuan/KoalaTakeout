@@ -1,3 +1,4 @@
+<!--管理员-首页-个人信息：http://localhost:8080/adminPerson-->
 <template>
   <div>
     <el-card style="width: 50%">
@@ -9,7 +10,7 @@
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
           >
-            <img v-if="user.avatar" :src="user.avatar" class="avatar" />
+            <img v-if="user.avatar" :src="user.avatar" class="avatar"/>
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </div>
@@ -55,7 +56,7 @@ export default {
           // 更新浏览器缓存里的用户信息
           localStorage.setItem('xm-user', JSON.stringify(this.user))
 
-          // 触发父级的数据更新
+          // 触发父级的数据更新（manager页面的数据同步更新）
           this.$emit('update:user')
         } else {
           this.$message.error(res.msg)
@@ -71,22 +72,26 @@ export default {
 </script>
 
 <style scoped>
-/deep/.el-form-item__label {
+/deep/ .el-form-item__label {
   font-weight: bold;
 }
-/deep/.el-upload {
+
+/deep/ .el-upload {
   border-radius: 50%;
 }
-/deep/.avatar-uploader .el-upload {
+
+/deep/ .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
 }
-/deep/.avatar-uploader .el-upload:hover {
+
+/deep/ .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -96,6 +101,7 @@ export default {
   text-align: center;
   border-radius: 50%;
 }
+
 .avatar {
   width: 120px;
   height: 120px;

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from "@/router";
+// axios封装
 
 // 创建可一个新的axios对象
 const request = axios.create({
@@ -12,7 +13,7 @@ const request = axios.create({
 // 比如统一加token，对请求参数统一加密
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';        // 设置请求头格式
-    let user = JSON.parse(localStorage.getItem("xm-user") || '{}')  // 获取缓存的用户信息
+    let user = JSON.parse(localStorage.getItem("xm-user") || '{}')  // 获取缓存的用户信息在xm-user内
     config.headers['token'] = user.token  // 设置请求头
 
     return config

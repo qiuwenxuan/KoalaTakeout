@@ -1,3 +1,4 @@
+<!--管理员-后台管理-首页-修改密码：http://localhost:8080/password-->
 <template>
   <div>
     <el-card style="width: 50%">
@@ -37,13 +38,13 @@ export default {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       rules: {
         password: [
-          { required: true, message: '请输入原始密码', trigger: 'blur' },
+          {required: true, message: '请输入原始密码', trigger: 'blur'},
         ],
         newPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' },
+          {required: true, message: '请输入新密码', trigger: 'blur'},
         ],
         confirmPassword: [
-          { validator: validatePassword, required: true, trigger: 'blur' },
+          {validator: validatePassword, required: true, trigger: 'blur'},
         ],
       }
     }
@@ -73,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-/deep/.el-form-item__label {
+/deep/ .el-form-item__label {
   font-weight: bold;
 }
 </style>

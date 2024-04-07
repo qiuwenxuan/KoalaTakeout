@@ -1,10 +1,11 @@
+<!--整体后台管理样式框架：主体、侧边栏、数据表格-->
 <template>
   <div class="manager-container">
     <!--  头部  -->
     <div class="manager-header">
       <div class="manager-header-left">
-        <img src="@/assets/imgs/logo.png" />
-        <div class="title">后台管理系统</div>
+        <img src="../assets/imgs/logo1.png"/>
+        <div class="title">考拉外卖</div>
       </div>
 
       <div class="manager-header-center">
@@ -17,8 +18,8 @@
       <div class="manager-header-right">
         <el-dropdown placement="bottom">
           <div class="avatar">
-            <img :src="user.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" />
-            <div>{{ user.name ||  '管理员' }}</div>
+            <img :src="user.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"/>
+            <div>{{ user.name || '管理员' }}</div>
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>
@@ -50,13 +51,15 @@
               <i class="el-icon-menu"></i><span>用户管理</span>
             </template>
             <el-menu-item index="/admin">管理员信息</el-menu-item>
+            <el-menu-item index="/business">商家信息</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
 
       <!--  数据表格  -->
       <div class="manager-main-right">
-        <router-view @update:user="updateUser" />
+        <!--        @update:user接收xxxPerson页面同步来的数据-->
+        <router-view @update:user="updateUser"/>
       </div>
     </div>
 
@@ -95,4 +98,8 @@ export default {
 
 <style scoped>
 @import "@/assets/css/manager.css";
+
+.title {
+  margin-left: 20px; /* 向右移动 20px */
+}
 </style>

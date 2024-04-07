@@ -1,3 +1,4 @@
+<!--管理员-后台管理-首页-公告信息：http://localhost:8080/notice-->
 <template>
   <div>
     <div class="search">
@@ -12,7 +13,7 @@
     </div>
 
     <div class="table">
-      <el-table :data="tableData" stripe  @selection-change="handleSelectionChange">
+      <el-table :data="tableData" stripe @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
         <el-table-column prop="title" label="标题" show-overflow-tooltip></el-table-column>
@@ -101,6 +102,7 @@ export default {
       this.$refs.formRef.validate((valid) => {
         if (valid) {
           this.$request({
+            // 如果有id属性，调用update接口；如果没有id属性，执行add接口
             url: this.form.id ? '/notice/update' : '/notice/add',
             method: this.form.id ? 'PUT' : 'POST',
             data: this.form

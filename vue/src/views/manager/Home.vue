@@ -1,3 +1,4 @@
+<!--管理员-后台管理-首页-系统首页：http://localhost:8080/home-->
 <template>
   <div>
     <div class="card" style="padding: 15px">
@@ -7,8 +8,8 @@
     <div style="display: flex; margin: 10px 0">
       <div style="width: 50%;" class="card">
         <div style="margin-bottom: 30px; font-size: 20px; font-weight: bold">公告列表</div>
-        <div >
-          <el-timeline  reverse slot="reference">
+        <div>
+          <el-timeline reverse slot="reference">
             <el-timeline-item v-for="item in notices" :key="item.id" :timestamp="item.time">
               <el-popover
                   placement="right"
