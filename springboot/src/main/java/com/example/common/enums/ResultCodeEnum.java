@@ -1,8 +1,7 @@
 package com.example.common.enums;
 
 /**
- *定义状态码的枚举类
- *
+ * 定义状态码的枚举类
  **/
 public enum ResultCodeEnum {
     SUCCESS("200", "成功"),
@@ -18,7 +17,8 @@ public enum ResultCodeEnum {
     USER_ACCOUNT_ERROR("5003", "账号或密码错误"),
     USER_NOT_EXIST_ERROR("5004", "用户不存在"),
     PARAM_PASSWORD_ERROR("5005", "原密码输入错误"),
-    ;
+
+    BUSINESS_EXIST_ERROR("5006", "商家不存在");
 
     public String code;
     public String msg;

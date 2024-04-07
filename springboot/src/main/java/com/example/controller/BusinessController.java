@@ -1,10 +1,9 @@
 package com.example.controller;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.example.common.Result;
-import com.example.common.enums.ResultCodeEnum;
 import com.example.entity.Business;
 import com.example.service.BusinessService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,17 +28,69 @@ public class BusinessController {
         return Result.success(list);
     }
 
+    /**
+     * 通过Id查询
+     **/
+    @GetMapping("/selectById/{id}")
+    public Result selectById(@PathVariable Integer id) {
+        Business business = businessService.selectById(id);
+        return Result.success(business);
+    }
+
+    /**
+     * 通过username查询
+     **/
+    @GetMapping("/selectByUsername")
+    public Result selectByUsername(@RequestParam String username) {
+        Business business = businessService.selectByUsername(username);
+        return Result.success(business);
+    }
+
+    /**
+     * 删除商家
+     **/
+    @DeleteMapping("/delete/{id}")
+    public Result deleteById(@PathVariable Integer id) {
+        businessService.deleteById(id);
+        return Result.success("删除成功！");
+    }
+
+    /**
+     * 批量删除
+     **/
+    @DeleteMapping("/delete/batch")
+    public Result deleteBatch(@RequestBody List<Integer> ids) {
+        businessService.deleteBatch(ids);
+        return Result.success("批量删除成功！");
+    }
+
+    /**
+     * 更新操作
+     **/
+    @PutMapping("/update/{id}")
+    public Result updateById(@RequestBody Business business) {
+        businessService.updateById(business);
+        return Result.success("更新操作成功！");
+    }
 
     /**
      * 添加数据
      **/
     @PostMapping("/add")
     public Result add(@RequestBody Business business) {
-        // 如果商家username和password为空，则抛出参数缺失错误
-        if (ObjectUtil.isEmpty(business.getUserName()) || ObjectUtil.isEmpty(business.getPassWord())) {
-            return Result.error(ResultCodeEnum.PARAM_LOST_ERROR);
-        }
         businessService.insert(business);  // 添加操作没有返回值，直接返回成功信息
-        return Result.success(business.getName() + "添加成功！");
+        return Result.success("添加成功！");
     }
+
+    /**
+     * 分页条件查询
+     */
+    @GetMapping("/selectPage")
+    public Result selectPage(Business business,
+                             @RequestParam(defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageInfo<Business> pageInfo = businessService.selectPage(business, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
+
 }

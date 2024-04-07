@@ -16,6 +16,9 @@ public interface BusinessMapper {
     /**
      * 新增数据
      **/
-    void insert(Business business); // 新增数据返回int类型的id
+    int insert(Business business); // 新增数据返回int类型的id
 
+    int deleteById(Integer id); // 通过id删除数据
+
+    int updateById(Business business);
 }
