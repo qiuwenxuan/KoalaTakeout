@@ -29,12 +29,12 @@ public class BusinessService {
      **/
     public void insert(Business business) {
         // 如果商家username和password为空，则抛出参数缺失错误
-        if (ObjectUtil.isEmpty(business.getUserName()) || ObjectUtil.isEmpty(business.getPassWord())) {
+        if (ObjectUtil.isEmpty(business.getUsername()) || ObjectUtil.isEmpty(business.getPassword())) {
             throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
         }
         // 创建一个空的Business对象
         Business params = new Business();
-        params.setUserName(business.getUserName());
+        params.setUsername(business.getUsername());
         // 调用selectAll()方法查询是否含有username，如果用户username已存在，则无法添加相同用户名的数据，且抛出异常
         List<Business> list = this.selectAll(params);
         if (CollUtil.isNotEmpty(list)) {
@@ -65,7 +65,7 @@ public class BusinessService {
      * 更新操作
      **/
     public void updateById(Business business) {
-        if (ObjectUtil.isEmpty(business.getUserName()) || ObjectUtil.isEmpty(business.getUserName()) || ObjectUtil.isEmpty(business.getPassWord())) {
+        if (ObjectUtil.isEmpty(business.getId()) || ObjectUtil.isEmpty(business.getPassword()) || ObjectUtil.isEmpty(business.getPassword())) {
             throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
         }
         List<Business> list = selectAll(business);
@@ -102,7 +102,7 @@ public class BusinessService {
             throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
         }
         Business param = new Business();
-        param.setUserName(username);
+        param.setUsername(username);
         List<Business> list = selectAll(param);
         // 如果数据库查询的id不存在
         if (CollUtil.isEmpty(list)) {

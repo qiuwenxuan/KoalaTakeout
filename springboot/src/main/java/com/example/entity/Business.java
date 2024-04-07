@@ -1,15 +1,12 @@
 package com.example.entity;
 
+import java.io.Serializable;
+
 /**
  * 商家表
  **/
-public class Business {
-    private Integer id;
-    private String username;
-    private String password;
-    private String name;
-    private String avatar;
-    private String role;
+public class Business extends Account implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String phone;
     private String info;
     private String address;
@@ -17,54 +14,6 @@ public class Business {
     private String status;
     private String timeRange;
     private String type;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return username;
-    }
-
-    public void setUserName(String username) {
-        this.username = username;
-    }
-
-    public String getPassWord() {
-        return password;
-    }
-
-    public void setPassWord(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public String getPhone() {
         return phone;

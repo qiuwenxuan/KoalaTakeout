@@ -4,21 +4,33 @@ package com.example.entity;
  * 角色用户父类
  */
 public class Account {
-    private Integer id;
-    /** 用户名 */
-    private String username;
-    /** 名称 */
-    private String name;
-    /** 密码 */
-    private String password;
-    /** 角色标识 */
-    private String role;
-    /** 新密码 */
-    private String newPassword;
-    /** 头像 */
-    private String avatar;
+    protected Integer id;
+    /**
+     * 用户名
+     */
+    protected String username;
+    /**
+     * 名称
+     */
+    protected String name;
+    /**
+     * 密码
+     */
+    protected String password;
+    /**
+     * 角色标识
+     */
+    protected String role;
+    /**
+     * 新密码
+     */
+    protected String newPassword;
+    /**
+     * 头像
+     */
+    protected String avatar;
 
-    private String token;
+    protected String token;
 
     public Integer getId() {
         return id;
