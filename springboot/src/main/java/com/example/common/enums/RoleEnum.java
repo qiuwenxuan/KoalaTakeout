@@ -1,7 +1,6 @@
 package com.example.common.enums;
 
 /**
- *
  * 角色类型的枚举类
  **/
 public enum RoleEnum {
@@ -9,4 +8,5 @@ public enum RoleEnum {
     ADMIN,
     // 商家
     BUSINESS,
+    USER,
 }
