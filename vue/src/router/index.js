@@ -54,7 +54,8 @@ const routes = [
                 meta: {name: '商家信息'},
                 component: () => import('../views/manager/Business')
             },
-            {path: 'user', name: 'user', meta: {name: '用户信息'}, component: () => import('../views/manager/User')},
+            {path: 'user', name: 'User', meta: {name: '用户信息'}, component: () => import('../views/manager/User')},
+            {path: 'category', name: 'Category', meta: {name: '商品分类'}, component: () => import('../views/manager/Category')},
         ]
     },
     {
