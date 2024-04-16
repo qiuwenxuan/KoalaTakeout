@@ -40,7 +40,7 @@ public class WebController {
         if (RoleEnum.ADMIN.name().equals(account.getRole())) {
             account = adminService.login(account);
         } else if (RoleEnum.BUSINESS.name().equals(account.getRole())) {
-            account = businessService.login(account);
+            account = businessService.login(account);  // 用户角色为商家，走商家的businessService方法
         }
         return Result.success(account);
     }

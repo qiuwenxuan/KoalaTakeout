@@ -33,7 +33,7 @@
 export default {
   name: "Register",
   data() {
-    let validateConfirmPass = (rule, value, callback) => {
+    let validateConfirmPass = (rule, value, callback) => {  // 判断确认密码的输入框与第一次输入的密码相同的函数
       if (value === '') {
         callback(new Error('请再次输入密码'));
       } else if (value !== this.form.password) {
@@ -43,7 +43,7 @@ export default {
       }
     }
     return {
-      form: {role: 'BUSINESS'},
+      form: {role: 'BUSINESS'}, // 该界面提交数据默认role=BUSINESS
       rules: {
         username: [
           {required: true, message: '请输入账号', trigger: 'blur'},
@@ -56,7 +56,7 @@ export default {
         comfirmPassword: [
           {required: true, message: '请确认密码', trigger: 'blur'},
           {min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur'},
-          {validator: validateConfirmPass, trigger: 'blur'}
+          {validator: validateConfirmPass, trigger: 'blur'}  // 确认密码的输入框与第一次输入的密码相同
         ]
       }
     }

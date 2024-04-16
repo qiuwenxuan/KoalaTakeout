@@ -46,6 +46,7 @@
             <el-menu-item index="/notice" v-if="user.role==='ADMIN'">公告信息</el-menu-item>
           </el-submenu>
 
+          <!--          v-if="user.role==='ADMIN' 表示当用户的角色为admin，该表项才会显示；当为商家登录时就看不到用户，商家，管理员等信息-->
           <el-submenu index="user" v-if="user.role==='ADMIN'">
             <template slot="title">
               <i class="el-icon-menu"></i><span>用户管理</span>

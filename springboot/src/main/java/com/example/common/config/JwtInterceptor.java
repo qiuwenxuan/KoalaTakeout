@@ -58,7 +58,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 根据userId查询数据库，如果解析的token内的用户角色是Admin,则根据userId查询admin数据库信息并返回account对象
             if (RoleEnum.ADMIN.name().equals(role)) {
                 account = adminService.selectById(Integer.valueOf(userId));
-            } else if (RoleEnum.BUSINESS.name().equals(role)) {
+            } else if (RoleEnum.BUSINESS.name().equals(role)) { // 如果用户角色是Business,则根据userId查询Business数据库信息并返回account对象
                 account = businessService.selectById(Integer.valueOf(userId));
             }
         } catch (Exception e) {
