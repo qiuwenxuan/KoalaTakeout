@@ -140,4 +140,19 @@ public class BusinessService {
         dbBusiness.setToken(token);
         return dbBusiness;
     }
+
+    /**
+     * 修改密码
+     */
+    public void updatePassword(Account account) {
+        Business dbBusiness = this.selectByUsername(account.getUsername());
+        if (ObjectUtil.isNull(dbBusiness)) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        if (!account.getPassword().equals(dbBusiness.getPassword())) {
+            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
+        }
+        dbBusiness.setPassword(account.getNewPassword());
+        this.updateById(dbBusiness);
+    }
 }
