@@ -155,4 +155,18 @@ public class BusinessService {
         dbBusiness.setPassword(account.getNewPassword());
         this.updateById(dbBusiness);
     }
+
+    /**
+     * 检查商家的权限，查看是否可以新增数据
+     **/
+    public void checkBusinessAuth() {
+        Account currentUser = TokenUtils.getCurrentUser(); // 获取当前的用户信息
+        if (RoleEnum.BUSINESS.name().equals(currentUser.getRole())) { // 如果用户是商家的话
+            Business business = selectById(currentUser.getId());
+            if (!"通过".equals(business.getStatus())) { // 如果商家的status不是通过，抛出无权限异常
+                throw new CustomException(ResultCodeEnum.USER_NOAUTH_ERROR);
+            }
+        }
+
+    }
 }
