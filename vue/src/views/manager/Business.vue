@@ -38,7 +38,14 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="审核状态"></el-table-column>
+        <!--        审核状态添加高亮-->
+        <el-table-column prop="status" label="审核状态">
+          <template v-slot="scope">
+            <el-tag type="info" v-if="scope.row.status === '待审核'">待审核</el-tag>
+            <el-tag type="success" v-if="scope.row.status === '通过'">通过</el-tag>
+            <el-tag type="danger" v-if="scope.row.status === '拒绝'">拒绝</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="timeRange" label="营业时间"></el-table-column>
         <el-table-column prop="type" label="简介"></el-table-column>
         <el-table-column label="操作" align="center" width="180">
@@ -93,7 +100,8 @@
         </el-form-item>
         <el-form-item label="类型" prop="type">
           <el-select style="width: 100%" v-model="form.type">
-            <el-option v-for="item in ['奶茶饮品', '轻食简餐', '炸鸡汉堡', '特色美味']" :key="item" :value="item" :label="item"></el-option>
+            <el-option v-for="item in ['奶茶饮品', '轻食简餐', '炸鸡汉堡', '特色美味']" :key="item" :value="item"
+                       :label="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="Logo">

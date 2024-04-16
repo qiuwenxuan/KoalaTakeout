@@ -31,6 +31,12 @@ const routes = [
                 component: () => import('../views/manager/AdminPerson')
             },
             {
+                path: 'businessPerson',
+                name: 'BusinessPerson',
+                meta: {name: '商家个人信息'},
+                component: () => import('../views/manager/BusinessPerson')
+            },
+            {
                 path: 'password',
                 name: 'Password',
                 meta: {name: '修改密码'},
