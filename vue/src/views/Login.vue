@@ -7,15 +7,24 @@
           <el-input prefix-icon="el-icon-user" placeholder="请输入账号" v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input prefix-icon="el-icon-lock" placeholder="请输入密码" show-password  v-model="form.password"></el-input>
+          <el-input prefix-icon="el-icon-lock" placeholder="请输入密码" show-password
+                    v-model="form.password"></el-input>
+        </el-form-item>
+        <el-form-item prop="role">
+          <el-radio-group v-model="form.role">
+            <el-radio label="ADMIN">管理员</el-radio>
+            <el-radio label="BUSINESS">商家</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-button style="width: 100%; background-color: #333; border-color: #333; color: white" @click="login">登 录</el-button>
+          <el-button style="width: 100%; background-color: #333; border-color: #333; color: white" @click="login">登
+            录
+          </el-button>
         </el-form-item>
         <div style="display: flex; align-items: center">
           <div style="flex: 1"></div>
           <div style="flex: 1; text-align: right">
-            还没有账号？请 <a href="/register">注册</a>
+            <a href="/register">注册商家</a>
           </div>
         </div>
       </el-form>
@@ -28,13 +37,13 @@ export default {
   name: "Login",
   data() {
     return {
-      form: { role: 'ADMIN' },
+      form: {role: 'ADMIN'},
       rules: {
         username: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
+          {required: true, message: '请输入账号', trigger: 'blur'},
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          {required: true, message: '请输入密码', trigger: 'blur'},
         ]
       }
     }
@@ -74,6 +83,7 @@ export default {
   justify-content: center;
   color: #666;
 }
+
 a {
   color: #2a60c9;
 }
