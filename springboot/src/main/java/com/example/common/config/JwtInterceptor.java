@@ -11,6 +11,7 @@ import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.exception.CustomException;
 import com.example.service.AdminService;
+import com.example.service.BusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,8 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Resource
     private AdminService adminService;
+    @Resource
+    private BusinessService businessService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -55,6 +58,8 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 根据userId查询数据库，如果解析的token内的用户角色是Admin,则根据userId查询admin数据库信息并返回account对象
             if (RoleEnum.ADMIN.name().equals(role)) {
                 account = adminService.selectById(Integer.valueOf(userId));
+            } else if (RoleEnum.BUSINESS.name().equals(role)) {
+                account = businessService.selectById(Integer.valueOf(userId));
             }
         } catch (Exception e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);

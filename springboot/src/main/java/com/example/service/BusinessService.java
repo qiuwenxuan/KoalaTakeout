@@ -3,11 +3,14 @@ package com.example.service;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
+import com.example.entity.Account;
 import com.example.entity.Business;
 import com.example.exception.CustomException;
 import com.example.mapper.BusinessMapper;
+import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,7 +38,7 @@ public class BusinessService {
         if (ObjectUtil.isNotEmpty(dbBusiness)) {
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
-        business.setRole(RoleEnum.BUSINESS.name());
+        business.setRole(RoleEnum.BUSINESS.name());  // 默认角色为BUSINESS
         businessMapper.insert(business);
     }
 
@@ -108,4 +111,33 @@ public class BusinessService {
         return PageInfo.of(list);  // 将查询的数据返回到分页查询规则的方法内返回数据
     }
 
+    /**
+     * 注册商家
+     **/
+    public void register(Account account) {
+        Business business = new Business();
+        BeanUtils.copyProperties(account, business); // 拷贝 账号和密码两个属性到对象business内
+        if (ObjectUtil.isEmpty(business.getName())) { // 如果用户的name为空，将username设置为name
+            business.setName(business.getUsername());
+        }
+        this.add(business); // 添加账户信息
+    }
+
+    /**
+     * 商家登录
+     **/
+    public Account login(Account account) {
+        Account dbBusiness = this.selectByUsername(account.getUsername());
+        if (ObjectUtil.isNull(dbBusiness)) {  // 查询数据库是否有该用户
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        if (!account.getPassword().equals(dbBusiness.getPassword())) {  // 比较用户名密码是否一致
+            throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
+        }
+        // 生成token
+        String tokenData = dbBusiness.getId() + "-" + RoleEnum.BUSINESS.name();
+        String token = TokenUtils.createToken(tokenData, dbBusiness.getPassword());
+        dbBusiness.setToken(token);
+        return dbBusiness;
+    }
 }
