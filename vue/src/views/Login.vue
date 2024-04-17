@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div style="width: 400px; padding: 30px; background-color: white; border-radius: 5px;">
-      <div style="text-align: center; font-size: 20px; margin-bottom: 20px; color: #333">欢迎使用</div>
+      <div style="text-align: center; font-size: 20px; margin-bottom: 20px; color: #333">考拉外卖平台登录</div>
       <el-form :model="form" :rules="rules" ref="formRef">
         <el-form-item prop="username">
           <el-input prefix-icon="el-icon-user" placeholder="请输入账号" v-model="form.username"></el-input>
