@@ -70,9 +70,6 @@ public class CategoryService {
 
     /**
      * 查询所有(重要)
-     * 商品分类查询所有信息需要做一个判断
-     * 1.当角色是商家时，只能查询到商品分类的businessName为该商家的商品
-     * 2.当角色为管理员时，便可以查询到所有的商品分类
      */
     public List<Category> selectAll(Category category) {
         // 拿到当前的登录用户信息

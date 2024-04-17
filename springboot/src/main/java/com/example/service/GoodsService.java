@@ -1,0 +1,105 @@
+package com.example.service;
+
+import cn.hutool.core.util.ObjectUtil;
+import com.example.common.enums.RoleEnum;
+import com.example.entity.Account;
+import com.example.entity.Category;
+import com.example.entity.Goods;
+import com.example.mapper.GoodsMapper;
+import com.example.utils.TokenUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * 商品信息业务处理
+ **/
+@Service
+public class GoodsService {
+
+    @Resource
+    private GoodsMapper goodsMapper;
+    @Resource
+    private BusinessService businessService;
+    @Resource
+    private CategoryService categoryService;
+
+    /**
+     * 新增
+     */
+    public void add(Goods goods) {
+        businessService.checkBusinessAuth(); // 当商家状态为“通过”，允许操作
+
+        Category category = categoryService.selectById(goods.getCategoryId());
+        if (ObjectUtil.isNotEmpty(category)) { // 因为Goods内含有categoryId和businessId,当goods赋予了商品分类categoryId时，由于商品分类属于商家，默认给商品good添加商家businessId
+            goods.setBusinessId(category.getBusinessId());
+        }
+        goodsMapper.insert(goods);
+    }
+
+    /**
+     * 删除
+     */
+    public void deleteById(Integer id) {
+        businessService.checkBusinessAuth(); // 当商家状态为“通过”，允许操作
+
+        goodsMapper.deleteById(id);
+    }
+
+    /**
+     * 批量删除
+     */
+    public void deleteBatch(List<Integer> ids) {
+        businessService.checkBusinessAuth(); // 当商家状态为“通过”，允许操作
+
+        for (Integer id : ids) {
+            goodsMapper.deleteById(id);
+        }
+    }
+
+    /**
+     * 修改
+     */
+    public void updateById(Goods goods) {
+        businessService.checkBusinessAuth(); // 当商家状态为“通过”，允许操作
+
+        goodsMapper.updateById(goods);
+    }
+
+    /**
+     * 根据ID查询
+     */
+    public Goods selectById(Integer id) {
+        return goodsMapper.selectById(id);
+    }
+
+    /**
+     * 查询所有
+     */
+    public List<Goods> selectAll(Goods goods) {
+        Account currentUser = TokenUtils.getCurrentUser();
+        String role = currentUser.getRole();
+        if (RoleEnum.BUSINESS.name().equals(role)) { // 当角色是商家时，只能查询到自己的商品信息
+            goods.setBusinessId(currentUser.getId());
+        }
+        return goodsMapper.selectAll(goods);
+    }
+
+    /**
+     * 分页查询
+     */
+    public PageInfo<Goods> selectPage(Goods goods, Integer pageNum, Integer pageSize) {
+        Account currentUser = TokenUtils.getCurrentUser();
+        String role = currentUser.getRole();
+        if (RoleEnum.BUSINESS.name().equals(role)) { // 当角色是商家时，只能查询到自己的商品信息
+            goods.setBusinessId(currentUser.getId());
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        List<Goods> list = goodsMapper.selectAll(goods);
+        return PageInfo.of(list);
+    }
+
+}
