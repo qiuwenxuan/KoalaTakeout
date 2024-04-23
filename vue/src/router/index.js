@@ -67,6 +67,11 @@ const routes = [
                 name: 'Banner',
                 meta: {name: '广告信息'},
                 component: () => import('../views/manager/Banner')
+            }, {
+                path: 'orders',
+                name: 'Orders',
+                meta: {name: '订单信息'},
+                component: () => import('../views/manager/Orders')
             },
         ]
     },
