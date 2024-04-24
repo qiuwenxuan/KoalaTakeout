@@ -73,6 +73,12 @@ const routes = [
                 meta: {name: '订单信息'},
                 component: () => import('../views/manager/Orders')
             },
+            {
+                path: 'collect',
+                name: 'Collect',
+                meta: {name: '收藏信息'},
+                component: () => import('../views/manager/Collect')
+            },
         ]
     },
     {
