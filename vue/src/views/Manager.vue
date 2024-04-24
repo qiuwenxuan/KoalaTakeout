@@ -4,7 +4,7 @@
     <!--  头部  -->
     <div class="manager-header">
       <div class="manager-header-left">
-        <img src="../assets/imgs/logo1.png"/>
+        <img src="../assets/imgs/logo1.png" class="enlarge-image"/>
         <div class="title">考拉外卖</div>
       </div>
 
@@ -47,7 +47,8 @@
             <el-menu-item index="/goods">商品信息</el-menu-item>
             <el-menu-item index="/orders">订单管理信息</el-menu-item>
             <el-menu-item index="/collect">店铺收藏信息</el-menu-item>
-            <el-menu-item index="/banner">广告信息</el-menu-item>
+            <el-menu-item index="/comment">店铺评论信息</el-menu-item>
+            <el-menu-item index="/banner" v-if="user.role==='ADMIN'">广告信息</el-menu-item>
             <el-menu-item index="/notice" v-if="user.role==='ADMIN'">公告信息</el-menu-item>
           </el-submenu>
 
@@ -110,5 +111,9 @@ export default {
 
 .title {
   margin-left: 20px; /* 向右移动 20px */
+}
+.enlarge-image {
+  width: 45px;
+  height: auto; /* 保留图片的原始纵横比 */
 }
 </style>

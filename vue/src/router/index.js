@@ -79,6 +79,12 @@ const routes = [
                 meta: {name: '收藏信息'},
                 component: () => import('../views/manager/Collect')
             },
+            {
+                path: 'comment',
+                name: 'Comment',
+                meta: {name: '商家评论信息'},
+                component: () => import('../views/manager/Comment')
+            },
         ]
     },
     {
