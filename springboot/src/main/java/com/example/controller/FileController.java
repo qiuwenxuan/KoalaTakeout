@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.List;
 
 /**
  * 文件接口
@@ -24,7 +23,7 @@ public class FileController {
     // System.getProperty("user.dir")获取当前项目根目录/KaolaTakeout
     private static final String filePath = System.getProperty("user.dir") + "/files/";
 
-    @Value("${server.port:9090}")
+    @Value("${server.port:8090}")
     private String port;
 
     @Value("${ip:localhost}")
@@ -57,7 +56,7 @@ public class FileController {
         }
         String http = "http://" + ip + ":" + port + "/files/";
         // 拼接文件下载路径并返回文件下载地址
-        return Result.success(http + flag + "-" + fileName);  //  http://localhost:9090/files/1697438073596-avatar.png
+        return Result.success(http + flag + "-" + fileName);  //  http://localhost:8090/files/1697438073596-avatar.png
     }
 
 

@@ -12,6 +12,7 @@ import com.example.entity.Account;
 import com.example.exception.CustomException;
 import com.example.service.AdminService;
 import com.example.service.BusinessService;
+import com.example.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,8 @@ public class JwtInterceptor implements HandlerInterceptor {
     private AdminService adminService;
     @Resource
     private BusinessService businessService;
+    @Resource
+    private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -60,6 +63,8 @@ public class JwtInterceptor implements HandlerInterceptor {
                 account = adminService.selectById(Integer.valueOf(userId));
             } else if (RoleEnum.BUSINESS.name().equals(role)) { // 如果用户角色是Business,则根据userId查询Business数据库信息并返回account对象
                 account = businessService.selectById(Integer.valueOf(userId));
+            } else if (RoleEnum.USER.name().equals(role)) { // 如果用户角色是User,则根据userId查询User数据库信息并返回account对象
+                account = userService.selectById(Integer.valueOf(userId));
             }
         } catch (Exception e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);
@@ -70,8 +75,8 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
         try {
             // 用户密码加签验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(account.getPassword())).build(); // 通过HMAC256算法将用户的password加密并返回个JWTVerifier对象
-            jwtVerifier.verify(token); // 验证token内是否与HMAC256加密算法内的Password一致
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(account.getPassword())).build(); // 使用用户的密码（password）通过HMAC256算法生成JWTVerifier对象
+            jwtVerifier.verify(token); // 将token与该对象进行验证，验证失败则抛出TOKEN_CHECK_ERROR异常。
         } catch (JWTVerificationException e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);
         }

@@ -8,6 +8,7 @@ import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.service.AdminService;
 import com.example.service.BusinessService;
+import com.example.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +23,8 @@ public class WebController {
     private AdminService adminService;
     @Resource
     private BusinessService businessService;
+    @Resource
+    private UserService userService;
 
     @GetMapping("/")
     public Result hello() {
@@ -41,6 +44,8 @@ public class WebController {
             account = adminService.login(account);
         } else if (RoleEnum.BUSINESS.name().equals(account.getRole())) {
             account = businessService.login(account);  // 用户角色为商家，走商家的businessService方法
+        } else if (RoleEnum.USER.name().equals(account.getRole())) {
+            account = userService.login(account);
         }
         return Result.success(account);
     }
@@ -55,8 +60,10 @@ public class WebController {
                 || ObjectUtil.isEmpty(account.getRole())) {
             return Result.error(ResultCodeEnum.PARAM_LOST_ERROR);
         }
-        if (RoleEnum.BUSINESS.name().equals(account.getRole())) {
+        if (RoleEnum.BUSINESS.name().equals(account.getRole())) { // 商家登录
             businessService.register(account);
+        } else if (RoleEnum.USER.name().equals(account.getRole())) { // 用户登录
+            userService.register(account);
         }
         return Result.success();
     }

@@ -1,6 +1,6 @@
 # tomcat端口
 server:
-  port: 9090
+  port: 8090
 
 # 数据库配置
 spring:

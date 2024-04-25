@@ -9,7 +9,7 @@ const request = (options = {}) => {
 			data: options.data || {},
 			header: options.header || {
 				"Content-Type": "application/json",
-				token: uni.getStorageSync('xm-user')?.token
+				token: uni.getStorageSync('xm-user')?.token // 请求时将xm-user对象的token存放在header内
 			}
 		}).then(res => {
 			let {

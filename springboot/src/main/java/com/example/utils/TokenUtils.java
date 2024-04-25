@@ -9,6 +9,7 @@ import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.service.AdminService;
 import com.example.service.BusinessService;
+import com.example.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.Date;
 
 /**
  * Token工具类
+ * 含创建Token方法createToken()、获取当前登录的用户对象方法getCurrentUser()
  *
  * @Component： 用于标识一个类为 Spring 组件，表示该类将由 Spring 容器进行管理。
  * @PostConstruct： 用于标识一个方法为初始化方法，表示在实例化该类后，Spring 容器会自动调用该方法。标记的方法通常可以用来进行一些初始化操作
@@ -33,17 +35,21 @@ public class TokenUtils {
 
     private static AdminService staticAdminService;
     private static BusinessService staticBusinessService;
+    private static UserService staticUserService;
 
     @Resource
     AdminService adminService;
     @Resource
     BusinessService businessService;
+    @Resource
+    UserService userService;
 
     @PostConstruct
     public void setUserService() {
         // 当创建TokenUtils类实例时，自动调用setUserService方法将注入的AdminService对象赋值给静态变量staticAdminService
         staticAdminService = adminService;
         staticBusinessService = businessService;
+        staticUserService = userService;
     }
 
     /**
@@ -71,6 +77,8 @@ public class TokenUtils {
                     return staticAdminService.selectById(Integer.valueOf(userId));
                 } else if (RoleEnum.BUSINESS.name().equals(role)) {
                     return staticBusinessService.selectById(Integer.valueOf(userId));
+                } else if (RoleEnum.USER.name().equals(role)) {
+                    return staticUserService.selectById(Integer.valueOf(userId));
                 }
             }
         } catch (Exception e) {

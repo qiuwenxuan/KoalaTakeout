@@ -15,10 +15,11 @@
 			}
 		},
 		onLoad() {
-			this.$request.get('/').then(res => {
+			this.$request.get('/banner/selectAll').then(res => {
 				console.log(res)
 			})
 		},
+
 		methods: {
 
 		}

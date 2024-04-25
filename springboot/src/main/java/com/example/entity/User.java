@@ -3,7 +3,7 @@ package com.example.entity;
 
 import java.io.Serializable;
 
-public class User implements Serializable {  // 这个接口是一个标记接口，不包含任何方法，只是用来指示编译器这个类可以被序列化。也就是可以转换成字节流进行传输或者持久化到磁盘上。
+public class User extends Account implements Serializable {  // 这个接口是一个标记接口，不包含任何方法，只是用来指示编译器这个类可以被序列化。也就是可以转换成字节流进行传输或者持久化到磁盘上。
     private static final long serialVersionUID = 1L; // 主要是为了控制版本的一致性，确保在对象的序列化和反序列化过程中不会出现版本不匹配的问题
 
     private Integer id;
