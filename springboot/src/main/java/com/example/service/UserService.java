@@ -107,7 +107,7 @@ public class UserService {
             throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
         }
         // 生成token
-        String tokenData = dbUser.getId() + "-" + RoleEnum.BUSINESS.name();
+        String tokenData = dbUser.getId() + "-" + RoleEnum.USER.name();
         String token = TokenUtils.createToken(tokenData, dbUser.getPassword());
         dbUser.setToken(token);
         return dbUser;
