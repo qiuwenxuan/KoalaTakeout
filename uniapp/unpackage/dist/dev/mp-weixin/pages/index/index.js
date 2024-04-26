@@ -287,10 +287,9 @@ var _default = {
 
       // 获取商家的列表
       this.$request.get('/business/selectAll', {
-        data: {
-          status: '通过'
-        }
+        status: '通过'
       }).then(function (res) {
+        // 传入一个对象为{status: '通过'}
         _this.businessList = res.data || [];
       });
     }

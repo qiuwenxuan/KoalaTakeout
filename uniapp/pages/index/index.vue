@@ -116,11 +116,7 @@ export default {
       })
 
       // 获取商家的列表
-      this.$request.get('/business/selectAll', {
-        data: {
-          status: '通过'
-        }
-      }).then(res => {
+      this.$request.get('/business/selectAll', {status: '通过'}).then(res => { // 传入一个对象为{status: '通过'}
         this.businessList = res.data || []
       })
     }
