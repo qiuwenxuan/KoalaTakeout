@@ -28,7 +28,7 @@
 
 			<!-- 分类商品展示 -->
 			<view class="box" style="display: flex; background-color: #fff; border-radius: 10rpx; padding: 10rpx">
-				<view style="width: 160rpx; text-align: center">
+				<view style="width: 200rpx; text-align: center">
 					<!-- 动态绑定class，默认商品分类样式为category-item；当item.id === activeCategoryId（点击了商品分类）商品样式变成了category-active -->
 					<view
 						v-for="item in categoryList"
@@ -41,29 +41,33 @@
 					</view>
 				</view>
 
-				<view style="padding: 20rpx; min-height: 70vh">
-					<view style="display: flex; grid-gap: 20rpx; margin-bottom: 20rpx" v-for="item in goodsList" :key="item.id">
-						<view style="width: 200rpx; height: 200rpx">
-							<image :src="item.img" style="width: 200rpx; height: 200rpx; border-radius: 10rpx; display: block"></image>
-						</view>
-						<view style="flex: 1; display: flex; flex-direction: column; justify-content: space-between">
-							<view style="font-size: 32rpx; font-weight: bold">{{ item.name }}</view>
-							<view style="font-size: 24rpx">{{ item.descr }}</view>
-							<view>
-								<text class="mini-btn">7折</text>
-								<text style="font-size: 24rpx; margin-left: 10rpx">已售 30</text>
+				<!-- scroll-y开启商品列表纵向滚动 -->
+				<scroll-view scroll-y="true" style="height: 70vh">
+					<!-- 商品列表 -->
+					<view style="padding: 20rpx; min-height: 70vh">
+						<view style="display: flex; grid-gap: 20rpx; margin-bottom: 20rpx" v-for="item in goodsList" :key="item.id">
+							<view style="width: 200rpx; height: 200rpx">
+								<image :src="item.img" style="width: 200rpx; height: 200rpx; border-radius: 10rpx; display: block"></image>
 							</view>
-							<view>
-								<text style="text-decoration: line-through">￥{{ item.price }}</text>
-								<text style="color: orangered; margin-left: 10rpx">￥{{ item.money || 0 }}</text>
-								<text class="mini-btn" style="margin-left: 5rpx">到手价</text>
-							</view>
-							<view>
-								<text class="mini-btn-fill">选购</text>
+							<view style="flex: 1; display: flex; flex-direction: column; justify-content: space-between">
+								<view style="font-size: 32rpx; font-weight: bold">{{ item.name }}</view>
+								<view style="font-size: 24rpx">{{ item.descr }}</view>
+								<view>
+									<text class="mini-btn">7折</text>
+									<text style="font-size: 24rpx; margin-left: 10rpx">已售 30</text>
+								</view>
+								<view>
+									<text style="text-decoration: line-through">￥{{ item.price }}</text>
+									<text style="color: orangered; margin-left: 10rpx">￥{{ item.money || 0 }}</text>
+									<text class="mini-btn" style="margin-left: 5rpx">到手价</text>
+								</view>
+								<view>
+									<text class="mini-btn-fill">选购</text>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>
+				</scroll-view>
 			</view>
 		</view>
 		<!-- 商家的分类商品列表结束 -->
