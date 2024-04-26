@@ -34,6 +34,13 @@
 				"navigationBarTitleText": "注 册",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/detial/detial",
+			"style": {
+				"navigationBarTitleText": "商 家",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
