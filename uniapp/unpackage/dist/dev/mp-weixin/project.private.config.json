@@ -9,8 +9,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "注册页面",
-          "pathName": "pages/register/register",
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
           "query": "",
           "launchMode": "default",
           "scene": null

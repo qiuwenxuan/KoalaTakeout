@@ -4,7 +4,6 @@
 			style="padding: 20rpx; margin: 80rpx 0; background-color: #fff; box-shadow: 0 2rpx 10rpx rgba(0,0,0,.1); border-radius: 10rpx;">
 			<view style="margin: 50rpx 30rpx; font-size: 40rpx;">欢迎注册</view>
 			<!-- :rules="rules" validateTrigger='blur' blur表示表单失焦的时候显示规则提醒，submit表示表单提交的时候显示规则提醒 -->
-
 			<uni-forms ref="form" :modelValue="form" :rules="rules" validateTrigger='blur'>
 				<uni-forms-item name="username" required>
 					<uni-easyinput prefixIcon="person" v-model="form.username" placeholder="请输入账号" />
