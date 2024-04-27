@@ -373,7 +373,8 @@ var _default = {
     loadCart: function loadCart() {
       var _this3 = this;
       this.$request.get('/cart/selectAll', {
-        userId: this.user.id
+        userId: this.user.id,
+        businessId: this.businessId
       }).then(function (res) {
         _this3.cartList = res.data || [];
         _this3.options[0].info = _this3.cartList.length; // 购物车上的info数字刷新为添加到购物车的商品数量

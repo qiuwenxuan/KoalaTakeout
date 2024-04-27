@@ -185,7 +185,7 @@ export default {
 		},
 		// 加载购物车数据，给cartList购物车列表赋值
 		loadCart() {
-			this.$request.get('/cart/selectAll', { userId: this.user.id }).then((res) => {
+			this.$request.get('/cart/selectAll', { userId: this.user.id, businessId: this.businessId }).then((res) => {
 				this.cartList = res.data || [];
 				this.options[0].info = this.cartList.length; // 购物车上的info数字刷新为添加到购物车的商品数量
 			});
