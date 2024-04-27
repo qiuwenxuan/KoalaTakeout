@@ -19,6 +19,10 @@ public class Goods {
      */
     private BigDecimal price;
     /**
+     * 实际价格（打折后）
+     **/
+    private BigDecimal actualPrice;
+    /**
      * 图片
      */
     private String img;
@@ -185,5 +189,13 @@ public class Goods {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public BigDecimal getActualPrice() {
+        return actualPrice;
+    }
+
+    public void setActualPrice(BigDecimal actualPrice) {
+        this.actualPrice = actualPrice;
     }
 }

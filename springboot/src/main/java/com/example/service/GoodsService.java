@@ -12,6 +12,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -73,7 +75,9 @@ public class GoodsService {
      * 根据ID查询
      */
     public Goods selectById(Integer id) {
-        return goodsMapper.selectById(id);
+        Goods goods = goodsMapper.selectById(id);
+        wrapGoods(goods); // 设置商品的打折之后的实际价格
+        return goods;
     }
 
     /**
@@ -85,7 +89,12 @@ public class GoodsService {
         if (RoleEnum.BUSINESS.name().equals(role)) { // 当角色是商家时，只能查询到自己的商品信息
             goods.setBusinessId(currentUser.getId());
         }
-        return goodsMapper.selectAll(goods);
+        List<Goods> goodsList = goodsMapper.selectAll(goods);
+        // 循环设置商品打折后的价格
+        for (Goods g : goodsList) {
+            wrapGoods(g);
+        }
+        return goodsList;
     }
 
     /**
@@ -98,8 +107,27 @@ public class GoodsService {
             goods.setBusinessId(currentUser.getId());
         }
         PageHelper.startPage(pageNum, pageSize);
-        List<Goods> list = goodsMapper.selectAll(goods);
-        return PageInfo.of(list);
+        List<Goods> goodsList = goodsMapper.selectAll(goods);
+
+        // 循环设置商品打折后的价格
+        for (Goods g : goodsList) {
+            wrapGoods(g);
+        }
+        return PageInfo.of(goodsList);
+    }
+
+    /**
+     * 设置商品的实际价格 = 标准价格*打折优惠
+     **/
+    public Goods wrapGoods(Goods goods) {
+        // 如果商品为空，返回null
+        if (ObjectUtil.isEmpty(goods)) {
+            return null;
+        }
+        // 设置商品实际价格 = 商品价格*打折优惠,保留两位小数向上取整
+        BigDecimal actualPrice = goods.getPrice().multiply(BigDecimal.valueOf(goods.getDiscount())).setScale(2, RoundingMode.UP);
+        goods.setActualPrice(actualPrice);
+        return goods;
     }
 
 }
