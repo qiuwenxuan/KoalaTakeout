@@ -98,10 +98,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniGoodsNav: function () {
+      return Promise.all(/*! import() | uni_modules/uni-goods-nav/components/uni-goods-nav/uni-goods-nav */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-goods-nav/components/uni-goods-nav/uni-goods-nav")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-goods-nav/components/uni-goods-nav/uni-goods-nav.vue */ 115))
+    },
+    uniPopup: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 126))
+    },
+    uniIcons: function () {
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 77))
+    },
+    uniNumberBox: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-number-box/components/uni-number-box/uni-number-box */ "uni_modules/uni-number-box/components/uni-number-box/uni-number-box").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-number-box/components/uni-number-box/uni-number-box.vue */ 133))
+    },
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.cartList.length
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -135,12 +176,55 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -225,43 +309,135 @@ var _default = {
       categoryList: [],
       activeCategoryId: 0,
       // activeCategoryId动态绑定着高亮样式，所以activeCategoryId表示动态高亮显示的CategoryId，
-      goodsList: []
+      goodsList: [],
+      options: [{
+        icon: 'cart',
+        text: '购物车',
+        info: 0 // 购物车上的红色数字
+      }],
+
+      buttonGroup: [{
+        text: '立即购买',
+        backgroundColor: 'linear-gradient(90deg, #FE6035, #EF1224)',
+        color: '#fff'
+      }],
+      user: uni.getStorageSync('xm-user'),
+      // 登录时缓存的user信息
+      cartList: [],
+      // 购物车列表
+      amount: {} // 商品总金额对象
     };
   },
   onLoad: function onLoad(option) {
     this.businessId = option.businessId;
     this.load();
+    this.loadCart(); // 初始化加载购物车数据
   },
+
   methods: {
-    load: function load() {
+    deleteAll: function deleteAll() {
       var _this = this;
+      this.$request.del('/cart/deleteByBusiness/' + this.businessId + '/' + this.user.id).then(function (res) {
+        if (res.code === '200') {
+          uni.showToast({
+            icon: 'success',
+            title: '操作成功'
+          });
+          _this.loadCart();
+        } else {
+          uni.showToast({
+            icon: 'error',
+            title: res.msg
+          });
+        }
+      });
+    },
+    updateCart: function updateCart(cart) {
+      var _this2 = this;
+      this.$request.put('/cart/update', cart).then(function (res) {
+        if (res.code === '200') {
+          _this2.loadCart(); // 更新购物车数据
+        } else {
+          uni.showToast({
+            icon: 'error',
+            title: res.msg
+          });
+        }
+      });
+    },
+    // 点击购物车图标触发向下打开购物车窗口
+    onClick: function onClick() {
+      this.$refs.popup.open('bottom');
+    },
+    // 加载购物车数据，给cartList购物车列表赋值
+    loadCart: function loadCart() {
+      var _this3 = this;
+      this.$request.get('/cart/selectAll', {
+        userId: this.user.id
+      }).then(function (res) {
+        _this3.cartList = res.data || [];
+        _this3.options[0].info = _this3.cartList.length; // 购物车上的info数字刷新为添加到购物车的商品数量
+      });
+
+      this.$request.get('/cart/calc', {
+        userId: this.user.id,
+        businessId: this.businessId
+      }).then(function (res) {
+        _this3.amount = res.data || {};
+      });
+    },
+    // 添加商品到购物车方法
+    addCart: function addCart(goods) {
+      var _this4 = this;
+      this.$request.post('/cart/add', {
+        goodsId: goods.id,
+        num: 1,
+        businessId: this.businessId,
+        userId: this.user.id
+      }).then(function (res) {
+        if (res.code === '200') {
+          uni.showToast({
+            icon: 'success',
+            title: '添加购物车成功'
+          });
+          _this4.loadCart();
+        } else {
+          uni.showToast({
+            icon: 'error',
+            title: res.msg
+          });
+        }
+      });
+    },
+    load: function load() {
+      var _this5 = this;
       this.$request.get('/business/selectById/' + this.businessId).then(function (res) {
-        _this.business = res.data || {};
-        console.log(_this.business);
+        _this5.business = res.data || {};
       });
       this.$request.get('/category/selectAll', {
         businessId: this.businessId
       }).then(function (res) {
-        _this.categoryList = res.data || [];
+        _this5.categoryList = res.data || [];
         // 当categoryList返回数据不为空,默认将activeCategoryId设置为第一个categoryList[0].id
-        _this.activeCategoryId = _this.categoryList.length > 0 ? _this.categoryList[0].id : 0;
+        _this5.activeCategoryId = _this5.categoryList.length > 0 ? _this5.categoryList[0].id : 0;
         // 调用loadGoods()方法将当前activeCategoryId设置为高亮显示
-        _this.loadGoods(_this.activeCategoryId);
+        _this5.loadGoods(_this5.activeCategoryId);
       });
     },
     // 点击执行函数loadGoods
     loadGoods: function loadGoods(categoryId) {
-      var _this2 = this;
+      var _this6 = this;
       this.activeCategoryId = categoryId;
       this.$request.get('/goods/selectAll', {
         categoryId: categoryId
       }).then(function (res) {
-        _this2.goodsList = res.data || [];
+        _this6.goodsList = res.data || [];
       });
     }
   }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

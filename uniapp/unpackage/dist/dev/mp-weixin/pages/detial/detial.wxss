@@ -124,6 +124,126 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 默认商品分类样式 */
 .category-item {
 	padding: 15rpx;
@@ -148,7 +268,7 @@
 	background-color: orange;
 	padding: 0 4rpx;
 	color: #fff;
-	font-size: 24rpx;
+	font-size: 30rpx;
 	border-radius: 5rpx;
 }
 /* 白色卡片样式 */

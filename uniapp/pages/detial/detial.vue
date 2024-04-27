@@ -42,7 +42,7 @@
 				</view>
 
 				<!-- scroll-y开启商品列表纵向滚动 -->
-				<scroll-view scroll-y="true" style="height: 70vh">
+				<scroll-view scroll-y="true" style="height: calc(100vh - 525rpx)">
 					<!-- 商品列表 -->
 					<view style="padding: 20rpx; min-height: 70vh">
 						<view style="display: flex; grid-gap: 20rpx; margin-bottom: 20rpx" v-for="item in goodsList" :key="item.id">
@@ -53,16 +53,16 @@
 								<view style="font-size: 32rpx; font-weight: bold">{{ item.name }}</view>
 								<view style="font-size: 24rpx">{{ item.descr }}</view>
 								<view>
-									<text class="mini-btn">7折</text>
+									<text class="mini-btn">{{ 10 * item.discount }}折</text>
 									<text style="font-size: 24rpx; margin-left: 10rpx">已售 30</text>
 								</view>
 								<view>
 									<text style="text-decoration: line-through">￥{{ item.price }}</text>
-									<text style="color: orangered; margin-left: 10rpx">￥{{ item.money || 0 }}</text>
+									<text style="color: orangered; margin-left: 10rpx">￥{{ item.actualPrice }}</text>
 									<text class="mini-btn" style="margin-left: 5rpx">到手价</text>
 								</view>
 								<view>
-									<text class="mini-btn-fill">选购</text>
+									<text class="mini-btn-fill" @click="addCart(item)">选购</text>
 								</view>
 							</view>
 						</view>
@@ -71,6 +71,49 @@
 			</view>
 		</view>
 		<!-- 商家的分类商品列表结束 -->
+
+		<!-- 购物车显示'立即购买'组件 uni-goods-nav -->
+		<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick" @buttonClick="buttonClick" />
+
+		<!-- 购物车窗口 -->
+		<uni-popup ref="popup" type="bottom" background-color="#fff">
+			<scroll-view style="max-height: 70vh" scroll-y="true">
+				<view style="padding: 40rpx 40rpx 100rpx 40rpx">
+					<view style="text-align: right; margin-bottom: 10rpx; color: #999" v-if="cartList.length">
+						<!-- v-if="cartList.length" 当cartList购物车没有商品数据时，不显示清空按钮 -->
+						<uni-icons style="position: relative; top: 4rpx" type="trash" size="16" color="#999" @click="deleteAll"></uni-icons>
+						清空购物车
+					</view>
+					<view v-for="(item, index) in cartList" :key="index" style="display: flex; margin-bottom: 20rpx" v-if="item.goods">
+						<view style="width: 100rpx; height: 100rpx">
+							<image style="width: 100%; height: 100%; display: inline-block" :src="item.goods.img"></image>
+						</view>
+						<view style="flex: 1; margin-left: 20rpx; display: flex; flex-direction: column; justify-content: space-around">
+							<view style="flex: 1">{{ item.goods.name }}</view>
+							<view style="flex: 1; color: red; display: flex; align-items: flex-end">
+								<view style="flex: 1">￥{{ item.goods.actualPrice }}</view>
+								<view style="flex: 1; display: flex; justify-content: right">
+									<!-- 购物车商品数量选择组件，界面显示商品数量item.num，当商品数量改变时调用@change="updateCart(item)"方法 -->
+									<uni-number-box :min="1" v-model="item.num" @change="updateCart(item)"></uni-number-box>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view style="margin-top: 40rpx; text-align: right" v-if="amount.amount">
+						总金额：
+						<text>￥{{ amount.amount }}</text>
+						<view style="margin-top: 10rpx; text-align: right" v-if="amount.discount">
+							优惠金额：
+							<text style="color: red">-￥{{ amount.discount }}</text>
+						</view>
+						<view style="margin-top: 10rpx; text-align: right" v-if="amount.actual">
+							实付金额：
+							<text style="color: red; font-size: 32rpx">￥{{ amount.actual }}</text>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -82,18 +125,95 @@ export default {
 			business: {},
 			categoryList: [],
 			activeCategoryId: 0, // activeCategoryId动态绑定着高亮样式，所以activeCategoryId表示动态高亮显示的CategoryId，
-			goodsList: []
+			goodsList: [],
+			options: [
+				{
+					icon: 'cart',
+					text: '购物车',
+					info: 0 // 购物车上的红色数字
+				}
+			],
+			buttonGroup: [
+				{
+					text: '立即购买',
+					backgroundColor: 'linear-gradient(90deg, #FE6035, #EF1224)',
+					color: '#fff'
+				}
+			],
+			user: uni.getStorageSync('xm-user'), // 登录时缓存的user信息
+			cartList: [], // 购物车列表
+			amount: {} // 商品总金额对象
 		};
 	},
 	onLoad(option) {
 		this.businessId = option.businessId;
 		this.load();
+		this.loadCart(); // 初始化加载购物车数据
 	},
 	methods: {
+		deleteAll() {
+			this.$request.del('/cart/deleteByBusiness/' + this.businessId + '/' + this.user.id).then((res) => {
+				if (res.code === '200') {
+					uni.showToast({
+						icon: 'success',
+						title: '操作成功'
+					});
+					this.loadCart();
+				} else {
+					uni.showToast({
+						icon: 'error',
+						title: res.msg
+					});
+				}
+			});
+		},
+		updateCart(cart) {
+			this.$request.put('/cart/update', cart).then((res) => {
+				if (res.code === '200') {
+					this.loadCart(); // 更新购物车数据
+				} else {
+					uni.showToast({
+						icon: 'error',
+						title: res.msg
+					});
+				}
+			});
+		},
+		// 点击购物车图标触发向下打开购物车窗口
+		onClick() {
+			this.$refs.popup.open('bottom');
+		},
+		// 加载购物车数据，给cartList购物车列表赋值
+		loadCart() {
+			this.$request.get('/cart/selectAll', { userId: this.user.id }).then((res) => {
+				this.cartList = res.data || [];
+				this.options[0].info = this.cartList.length; // 购物车上的info数字刷新为添加到购物车的商品数量
+			});
+
+			this.$request.get('/cart/calc', { userId: this.user.id, businessId: this.businessId }).then((res) => {
+				this.amount = res.data || {};
+			});
+		},
+		// 添加商品到购物车方法
+		addCart(goods) {
+			this.$request.post('/cart/add', { goodsId: goods.id, num: 1, businessId: this.businessId, userId: this.user.id }).then((res) => {
+				if (res.code === '200') {
+					uni.showToast({
+						icon: 'success',
+						title: '添加购物车成功'
+					});
+					this.loadCart();
+				} else {
+					uni.showToast({
+						icon: 'error',
+						title: res.msg
+					});
+				}
+			});
+		},
 		load() {
 			this.$request.get('/business/selectById/' + this.businessId).then((res) => {
 				this.business = res.data || {};
-				console.log(this.business);
 			});
 
 			this.$request
@@ -150,7 +270,7 @@ export default {
 	background-color: orange;
 	padding: 0 4rpx;
 	color: #fff;
-	font-size: 24rpx;
+	font-size: 30rpx;
 	border-radius: 5rpx;
 }
 
