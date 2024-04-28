@@ -52,7 +52,21 @@
 		{
 			"path": "pages/orderComment/orderComment",
 			"style": {
-				"navigationBarTitleText": "备 注",
+				"navigationBarTitleText": "商品备注",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/address/address",
+			"style": {
+				"navigationBarTitleText": "收货地址",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/addAddress/addAddress",
+			"style": {
+				"navigationBarTitleText": "新增地址",
 				"enablePullDownRefresh": false
 			}
 		}

@@ -140,11 +140,4 @@ export default {
   grid-gap: 10rpx;
 }
 
-/* 白色卡片样式 */
-.box {
-  background-color: #fff;
-  padding: 20rpx;
-  border-radius: 10rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, .1);
-}
 </style>

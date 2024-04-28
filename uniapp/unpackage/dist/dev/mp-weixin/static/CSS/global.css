@@ -8,3 +8,11 @@ page {
 	background-color: #f8f8f8;
 	font-size: 28rpx;
 }
+
+/* 白色卡片样式 */
+.box {
+	background-color: #fff;
+	padding: 20rpx;
+	border-radius: 10rpx;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}

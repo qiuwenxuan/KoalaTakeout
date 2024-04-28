@@ -72,7 +72,7 @@
 		</view>
 		<!-- 商家的分类商品列表结束 -->
 
-		<!-- 购物车显示'立即购买'组件 uni-goods-nav -->
+		<!-- 购物车显示'立即下单'组件 uni-goods-nav -->
 		<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick" @buttonClick="buttonClick" />
 
 		<!-- 购物车窗口 -->
@@ -153,8 +153,11 @@ export default {
 	methods: {
 		// 立即下单跳转页面方法
 		buttonClick() {
+			let xmOrders = uni.getStorageSync('xm-orders') || {}; // 首先定义一个变量获取缓存里的xmOrders对象
+			xmOrders.businessId = this.businessId; // 将addressId赋值到变量内
+			uni.setStorageSync('xm-orders', xmOrders); // 安全的将businessId存储到缓存xm-orders对象内
 			uni.navigateTo({
-				url: '/pages/confirm/confirm?businessId=' + this.businessId
+				url: '/pages/confirm/confirm'
 			});
 		},
 		deleteAll() {
@@ -278,13 +281,5 @@ export default {
 	color: #fff;
 	font-size: 30rpx;
 	border-radius: 5rpx;
-}
-
-/* 白色卡片样式 */
-.box {
-	background-color: #fff;
-	padding: 20rpx;
-	border-radius: 10rpx;
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 </style>

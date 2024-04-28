@@ -250,6 +250,9 @@
 
 
 
+
+
+
 /* 默认商品分类样式 */
 .category-item {
 	padding: 15rpx;
@@ -276,12 +279,5 @@
 	color: #fff;
 	font-size: 30rpx;
 	border-radius: 5rpx;
-}
-/* 白色卡片样式 */
-.box {
-	background-color: #fff;
-	padding: 20rpx;
-	border-radius: 10rpx;
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 

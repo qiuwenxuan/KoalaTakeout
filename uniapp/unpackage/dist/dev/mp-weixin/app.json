@@ -7,7 +7,9 @@
     "pages/register/register",
     "pages/detial/detial",
     "pages/confirm/confirm",
-    "pages/orderComment/orderComment"
+    "pages/orderComment/orderComment",
+    "pages/address/address",
+    "pages/addAddress/addAddress"
   ],
   "subPackages": [],
   "window": {
