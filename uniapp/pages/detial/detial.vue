@@ -79,9 +79,9 @@
 		<uni-popup ref="popup" type="bottom" background-color="#fff">
 			<scroll-view style="max-height: 70vh" scroll-y="true">
 				<view style="padding: 40rpx 40rpx 100rpx 40rpx">
-					<view style="text-align: right; margin-bottom: 10rpx; color: #999" v-if="cartList.length">
+					<view style="text-align: right; margin-bottom: 10rpx; color: #999" v-if="cartList.length" @click="deleteAll">
 						<!-- v-if="cartList.length" 当cartList购物车没有商品数据时，不显示清空按钮 -->
-						<uni-icons style="position: relative; top: 4rpx" type="trash" size="16" color="#999" @click="deleteAll"></uni-icons>
+						<uni-icons style="position: relative; top: 4rpx" type="trash" size="16" color="#999"></uni-icons>
 						清空购物车
 					</view>
 					<view v-for="(item, index) in cartList" :key="index" style="display: flex; margin-bottom: 20rpx" v-if="item.goods">
