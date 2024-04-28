@@ -2,6 +2,7 @@ package com.example.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.example.entity.AmountDTO;
+import com.example.entity.Business;
 import com.example.entity.Cart;
 import com.example.entity.Goods;
 import com.example.mapper.CartMapper;
@@ -23,6 +24,8 @@ public class CartService {
     private CartMapper cartMapper;
     @Resource
     private GoodsService goodsService;
+    @Resource
+    private BusinessService businessService;
 
     /**
      * 新增
@@ -58,10 +61,12 @@ public class CartService {
      * 根据ID查询
      */
     public Cart selectById(Integer id) {
-        // 调用查询接口，给cart.goods属性赋值并一起返回
+        // 调用查询接口，给cart.goods、business属性赋值并一起返回
         Cart cart = cartMapper.selectById(id);
         Goods goods = goodsService.selectById(cart.getGoodsId());
+        Business business = businessService.selectById(cart.getBusinessId());
         cart.setGoods(goods);
+        cart.setBusiness(business);
         return cart;
     }
 
@@ -73,7 +78,9 @@ public class CartService {
         List<Cart> carts = cartMapper.selectAll(cart);
         for (Cart c : carts) {
             Goods goods = goodsService.selectById(c.getGoodsId());
+            Business business = businessService.selectById(c.getBusinessId());
             c.setGoods(goods);
+            c.setBusiness(business);
         }
         return carts;
     }

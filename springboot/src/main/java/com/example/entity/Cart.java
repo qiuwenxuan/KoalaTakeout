@@ -25,6 +25,10 @@ public class Cart {
      * 商品信息
      **/
     private Goods goods;
+    /**
+     * 商家信息
+     **/
+    private Business business;
 
     public Integer getId() {
         return id;
@@ -72,5 +76,13 @@ public class Cart {
 
     public void setGoods(Goods goods) {
         this.goods = goods;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 }
