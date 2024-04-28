@@ -41,6 +41,20 @@
 				"navigationBarTitleText": "商 家",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/confirm/confirm",
+			"style": {
+				"navigationBarTitleText": "下 单",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/orderComment/orderComment",
+			"style": {
+				"navigationBarTitleText": "备 注",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

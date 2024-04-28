@@ -135,7 +135,7 @@ export default {
 			],
 			buttonGroup: [
 				{
-					text: '立即购买',
+					text: '立即下单',
 					backgroundColor: 'linear-gradient(90deg, #FE6035, #EF1224)',
 					color: '#fff'
 				}
@@ -151,6 +151,12 @@ export default {
 		this.loadCart(); // 初始化加载购物车数据
 	},
 	methods: {
+		// 立即下单跳转页面方法
+		buttonClick() {
+			uni.navigateTo({
+				url: '/pages/confirm/confirm?businessId=' + this.businessId
+			});
+		},
 		deleteAll() {
 			this.$request.del('/cart/deleteByBusiness/' + this.businessId + '/' + this.user.id).then((res) => {
 				if (res.code === '200') {

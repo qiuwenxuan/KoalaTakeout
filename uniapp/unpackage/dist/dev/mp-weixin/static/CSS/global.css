@@ -5,6 +5,6 @@
 page {
 	/* 定义根节点的最小高度为整个窗口的高度 */
 	min-height: 100vh;
-	background-color: #fdfdfd;
+	background-color: #f8f8f8;
 	font-size: 28rpx;
 }

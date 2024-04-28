@@ -5,7 +5,9 @@
     "pages/me/me",
     "pages/login/login",
     "pages/register/register",
-    "pages/detial/detial"
+    "pages/detial/detial",
+    "pages/confirm/confirm",
+    "pages/orderComment/orderComment"
   ],
   "subPackages": [],
   "window": {
