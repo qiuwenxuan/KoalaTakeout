@@ -14,6 +14,10 @@ public class Business extends Account implements Serializable {
     private String status;
     private String timeRange;
     private String type;
+    /**
+     * 是否收藏
+     **/
+    private boolean isCollect;
 
     public String getPhone() {
         return phone;
@@ -69,5 +73,13 @@ public class Business extends Account implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean getIsCollect() {
+        return isCollect;
+    }
+
+    public void setIsCollect(boolean isCollect) {
+        this.isCollect = isCollect;
     }
 }

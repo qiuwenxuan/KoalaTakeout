@@ -84,4 +84,12 @@ public class CollectController {
         return Result.success(page);
     }
 
+    /**
+     * 收藏商家
+     */
+    @PostMapping("/saveCollect")
+    public Result saveCollect(@RequestBody Collect collect) {
+        collectService.saveCollect(collect);
+        return Result.success();
+    }
 }

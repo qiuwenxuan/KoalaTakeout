@@ -34,6 +34,11 @@ public class Collect implements Serializable {
      **/
     private String userName;
 
+    /**
+     * 商家
+     **/
+    private Business business;
+
     public Integer getId() {
         return id;
     }
@@ -80,5 +85,13 @@ public class Collect implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business busines) {
+        this.business = busines;
     }
 }

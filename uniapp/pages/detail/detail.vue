@@ -3,7 +3,14 @@
 		<!-- 商家信息 -->
 		<view class="box" style="display: flex">
 			<view style="flex: 1; display: flex; flex-direction: column; justify-content: space-between">
-				<view style="font-size: 36rpx; font-weight: bold">{{ business.name || '' }}</view>
+				<view style="font-size: 36rpx; font-weight: bold">
+					<text>{{ business.name || '' }}</text>
+					<!-- 通过判断 business.isCollect是否存在，显示已收藏和未收藏 -->
+					<!-- 黄色的星星：已收藏 -->
+					<uni-icons type="star-filled" size="18" color="orange" style="margin-left: 20rpx" v-if="business.isCollect" @click="saveCollect()"></uni-icons>
+					<!-- 灰颜色的星星：未收藏 -->
+					<uni-icons type="star-filled" size="18" color="#999" style="margin-left: 20rpx" v-else @click="saveCollect()"></uni-icons>
+				</view>
 				<view>
 					<text style="padding-right: 10rpx; border-right: 2rpx solid #ccc">平台配送</text>
 					<text style="padding: 0 10rpx; border-right: 2rpx solid #ccc">免配送费</text>
@@ -155,6 +162,23 @@ export default {
 		this.loadCart(); // 初始化加载购物车数据
 	},
 	methods: {
+		// 添加/取消商家收藏方法
+		saveCollect() {
+			this.$request.post('/collect/saveCollect', { userId: this.user.id, businessId: this.businessId }).then((res) => {
+				if (res.code === '200') {
+					uni.showToast({
+						icon: 'success',
+						title: '操作成功'
+					});
+					this.load();
+				} else {
+					uni.showToast({
+						icon: 'error',
+						title: res.msg
+					});
+				}
+			});
+		},
 		// 立即下单跳转页面方法
 		buttonClick() {
 			if (this.cartList.length === 0) {

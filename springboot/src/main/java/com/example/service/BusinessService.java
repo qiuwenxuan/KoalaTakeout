@@ -5,6 +5,7 @@ import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.entity.Business;
+import com.example.entity.Collect;
 import com.example.exception.CustomException;
 import com.example.mapper.BusinessMapper;
 import com.example.utils.TokenUtils;
@@ -25,6 +26,8 @@ public class BusinessService {
 
     @Resource
     private BusinessMapper businessMapper;
+    @Resource
+    private CollectService collectService;
 
     /**
      * 新增商家
@@ -99,7 +102,16 @@ public class BusinessService {
         Business params = new Business();
         params.setId(id);
         List<Business> list = this.selectAll(params);
-        return list.size() == 0 ? null : list.get(0);
+        Business business = list.size() == 0 ? null : list.get(0);
+        // 当business不为空
+        if (ObjectUtil.isNotEmpty(business)) {
+            Account currentUser = TokenUtils.getCurrentUser();
+            Collect collect = collectService.selectByUserIdAndBusinessId(currentUser.getId(), id);
+            // 如果查询到用户收藏了某商家，则返回该商家的isCollect为true
+            business.setIsCollect(ObjectUtil.isNotEmpty(collect));
+        }
+
+        return business;
     }
 
     /**

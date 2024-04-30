@@ -4,18 +4,5 @@
   "setting": {
     "compileHotReLoad": true,
     "urlCheck": false
-  },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages/me/me",
-          "pathName": "pages/me/me",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        }
-      ]
-    }
   }
 }
