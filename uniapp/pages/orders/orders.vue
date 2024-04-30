@@ -2,16 +2,16 @@
 	<view>
 		<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="text" activeColor="#ff9900"></uni-segmented-control>
 		<view style="padding: 20rpx">
-			<view v-if="current === index" v-for="(tab, index) in 4" :key="index">
+			<view>
 				<view class="box" v-for="item in ordersList" :key="item.id" style="margin-bottom: 10rpx">
 					<view style="display: flex; align-items: baseline; margin-bottom: 10rpx">
-						<navigator :url="'/pages/detail/detail?businessId=' + item.businessId" style="flex: 1; font-size: 32rpx">
+						<navigator :url="'/pages/detail/detail?businessId=' + item.businessId" style="flex: 1; font-size: 32rpx; font-weight: bold; color: #666">
 							{{ item.businessName }}
 							<uni-icons type="right" size="16" color="#666" style="position: relative; top: 2rpx"></uni-icons>
 						</navigator>
 						<view style="font-size: 24rpx; color: #666">{{ item.status }}</view>
 					</view>
-					<view style="display: flex; align-items: center; grid-gap: 20rpx; margin-bottom: 10rpx">
+					<view style="display: flex; align-items: center; grid-gap: 20rpx; margin-bottom: 10rpx" @click="goOrdersItem(item.id)">
 						<view><image style="display: block; width: 160rpx; height: 160rpx; border-radius: 10rpx" :src="item.cover"></image></view>
 						<view style="flex: 1">{{ item.name }}</view>
 						<view>
@@ -60,6 +60,11 @@ export default {
 		this.loadOrders();
 	},
 	methods: {
+		goOrdersItem(orderId) {
+			uni.navigateTo({
+				url: '/pages/ordersItem/ordersItem?orderId=' + orderId
+			});
+		},
 		del(orderId) {
 			this.$request.del('/orders/delete/' + orderId).then((res) => {
 				if (res.code === '200') {

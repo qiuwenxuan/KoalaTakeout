@@ -44,9 +44,13 @@
         </el-table-column>
         <el-table-column label="操作" align="center" width="240" fixed="right">
           <template v-slot="scope">
-            <el-button size="mini" type="info" @click="sendGoods(scope.row)" v-if="scope.row.status === '待发货'">发货</el-button>
-            <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)" v-if="user.role === 'ADMIN'">编辑</el-button>
-            <el-button size="mini" type="danger" plain @click="del(scope.row.id)" v-if="user.role === 'ADMIN'">删除</el-button>
+            <el-button size="mini" type="info" @click="sendGoods(scope.row)" v-if="scope.row.status === '待发货'">发货
+            </el-button>
+            <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)" v-if="user.role === 'ADMIN'">
+              编辑
+            </el-button>
+            <el-button size="mini" type="danger" plain @click="del(scope.row.id)" v-if="user.role === 'ADMIN'">删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -75,7 +79,8 @@
         </el-form-item>
         <el-form-item label="订单状态" prop="status">
           <el-select style="width: 100%" v-model="form.status">
-            <el-option v-for="item in ['已取消', '待支付', '待发货', '待收货', '待评价', '已完成']" :key="item" :value="item"></el-option>
+            <el-option v-for="item in ['已取消', '待支付', '待发货', '待收货', '待评价', '已完成']" :key="item"
+                       :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="下单时间" prop="time">
@@ -125,7 +130,8 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="订单详情信息" :visible.sync="fromVisible1" width="40%" :close-on-click-modal="false" destroy-on-close>
+    <el-dialog title="订单详情信息" :visible.sync="fromVisible1" width="40%" :close-on-click-modal="false"
+               destroy-on-close>
       <el-table :data="ordersItemList" strip @selection-change="handleSelectionChange">
         <el-table-column prop="orderId" label="订单ID" align="center"></el-table-column>
         <el-table-column prop="goodsName" label="商品名称"></el-table-column>
@@ -208,7 +214,7 @@ export default {
           orderId: orderId
         }
       }).then(res => {
-        this.ordersItemList = res.data ||  []
+        this.ordersItemList = res.data || []
         this.fromVisible1 = true  // 打开弹窗
       })
     },

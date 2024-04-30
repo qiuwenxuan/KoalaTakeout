@@ -34,7 +34,7 @@
                 <when test="status == '已退款'">
                     and orders.status = '已退款'
                 </when>
-                <when test="status != null'">
+                <when test="status != null">
                     and orders.status = #{status}
                 </when>
             </choose>
@@ -43,8 +43,14 @@
     </select>
 
     <select id="selectById" resultType="com.example.entity.Orders">
-        select *
+        select orders.*,
+               business.name as businessName,
+               user.name     as userName
         from orders
+                 left join business
+                           on business.id = orders.business_id
+                 left join user
+                           on user.id = orders.user_id
         where orders.id = #{id}
     </select>
 

@@ -9,7 +9,8 @@
     "pages/confirm/confirm",
     "pages/orderComment/orderComment",
     "pages/address/address",
-    "pages/addAddress/addAddress"
+    "pages/addAddress/addAddress",
+    "pages/ordersItem/ordersItem"
   ],
   "subPackages": [],
   "window": {

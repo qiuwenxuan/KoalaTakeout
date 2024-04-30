@@ -19879,6 +19879,12 @@ var _default = {
       "navigationBarTitleText": "新增地址",
       "enablePullDownRefresh": false
     }
+  }, {
+    "path": "pages/ordersItem/ordersItem",
+    "style": {
+      "navigationBarTitleText": "订单详情",
+      "enablePullDownRefresh": false
+    }
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",

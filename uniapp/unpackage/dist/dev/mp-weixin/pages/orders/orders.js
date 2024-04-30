@@ -229,6 +229,11 @@ var _default = {
     this.loadOrders();
   },
   methods: {
+    goOrdersItem: function goOrdersItem(orderId) {
+      uni.navigateTo({
+        url: '/pages/ordersItem/ordersItem?orderId=' + orderId
+      });
+    },
     del: function del(orderId) {
       var _this = this;
       this.$request.del('/orders/delete/' + orderId).then(function (res) {
