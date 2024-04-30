@@ -11,7 +11,12 @@
     "pages/address/address",
     "pages/addAddress/addAddress",
     "pages/ordersItem/ordersItem",
-    "pages/comment/comment"
+    "pages/comment/comment",
+    "pages/collect/collect",
+    "pages/commentCenter/commentCenter",
+    "pages/aboutUs/aboutUs",
+    "pages/agreement/agreement",
+    "pages/person/person"
   ],
   "subPackages": [],
   "window": {

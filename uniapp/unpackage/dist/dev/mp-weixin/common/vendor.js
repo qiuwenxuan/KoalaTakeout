@@ -19903,6 +19903,36 @@ var _default = {
       "navigationBarTitleText": "订单评价",
       "enablePullDownRefresh": false
     }
+  }, {
+    "path": "pages/collect/collect",
+    "style": {
+      "navigationBarTitleText": "我的收藏",
+      "enablePullDownRefresh": false
+    }
+  }, {
+    "path": "pages/commentCenter/commentCenter",
+    "style": {
+      "navigationBarTitleText": "评价中心",
+      "enablePullDownRefresh": false
+    }
+  }, {
+    "path": "pages/aboutUs/aboutUs",
+    "style": {
+      "navigationBarTitleText": "关于我们",
+      "enablePullDownRefresh": false
+    }
+  }, {
+    "path": "pages/agreement/agreement",
+    "style": {
+      "navigationBarTitleText": "用户协议",
+      "enablePullDownRefresh": false
+    }
+  }, {
+    "path": "pages/person/person",
+    "style": {
+      "navigationBarTitleText": "个人信息",
+      "enablePullDownRefresh": false
+    }
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
