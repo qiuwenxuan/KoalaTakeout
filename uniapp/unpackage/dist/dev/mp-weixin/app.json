@@ -10,7 +10,8 @@
     "pages/orderComment/orderComment",
     "pages/address/address",
     "pages/addAddress/addAddress",
-    "pages/ordersItem/ordersItem"
+    "pages/ordersItem/ordersItem",
+    "pages/comment/comment"
   ],
   "subPackages": [],
   "window": {

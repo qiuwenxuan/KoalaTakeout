@@ -1,13 +1,18 @@
 package com.example.service;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.example.common.enums.OrderStatusEnum;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.entity.Comment;
+import com.example.entity.Orders;
 import com.example.mapper.CommentMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,11 +25,27 @@ public class CommentService {
 
     @Resource
     private CommentMapper commentMapper;
+    @Resource
+    private OrdersService ordersService;
 
     /**
      * 新增
      */
+    @Transactional // 涉及到两个表之间的更新，需要将其包装成一个事务
     public void add(Comment comment) {
+        // 设置评论时间
+        comment.setTime(DateUtil.now());
+        Orders orders = ordersService.selectById(comment.getOrderId());
+        if (ObjectUtil.isNotEmpty(orders)) {
+            // 设置评论的商家Id
+            comment.setBusinessId(orders.getBusinessId());
+            // 设置订单状态由 “待评论” 变成 “已完成”并更新
+            orders.setStatus(OrderStatusEnum.DONE.getValue());
+            ordersService.updateById(orders);
+        }
+        // 设置评论的当前用户
+        Account currentUser = TokenUtils.getCurrentUser();
+        comment.setUserId(currentUser.getId());
         commentMapper.insert(comment);
     }
 

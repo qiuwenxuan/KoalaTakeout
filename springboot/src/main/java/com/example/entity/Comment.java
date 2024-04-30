@@ -28,10 +28,7 @@ public class Comment implements Serializable {
      * 商家iD
      */
     private Integer businessId;
-    /**
-     * 商品ID
-     */
-    private Integer goodsId;
+
     /**
      * 订单ID
      */
@@ -94,13 +91,6 @@ public class Comment implements Serializable {
         this.businessId = businessId;
     }
 
-    public Integer getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
-    }
 
     public Integer getOrderId() {
         return orderId;

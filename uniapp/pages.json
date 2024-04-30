@@ -76,6 +76,13 @@
 				"navigationBarTitleText": "订单详情",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/comment/comment",
+			"style": {
+				"navigationBarTitleText": "订单评价",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
