@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.OrdersItem;
+import org.apache.ibatis.annotations.Delete;
 
 import java.util.List;
 
@@ -34,4 +35,9 @@ public interface OrdersItemMapper {
      */
     List<OrdersItem> selectAll(OrdersItem ordersItem);
 
+    /**
+     * 通过orderId删除订单详情表
+     **/
+    @Delete("delete from orders_item where order_Id = #{orderId}")
+    void deleteByOrderId(Integer orderId);
 }

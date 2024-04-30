@@ -47,7 +47,7 @@
       <view>
 		  <!-- key="item.id"表示根据businessList数组中每个元素的id属性来唯一标识循环生成的每个元素，可以使vue更有效地跟踪每个元素的变化 -->
         <view class="box" v-for="item in businessList" :key="item.id"
-              style="display: flex; grid-gap: 30rpx; margin-bottom: 10rpx;" @click="goToDetial(item.id)">
+              style="display: flex; grid-gap: 30rpx; margin-bottom: 10rpx;" @click="goToDetail(item.id)">
           <view style="width: 30%;">
             <image :src="item.avatar"
                    style="width: 100%; height: 200rpx; border-radius: 10rpx; display: block;"></image>
@@ -92,9 +92,9 @@ export default {
     this.load()
   },
   methods: {
-	goToDetial(businessId){
+	goToDetail(businessId){
 		  uni.navigateTo({
-			  url: '/pages/detial/detial?businessId=' + businessId
+			  url: '/pages/detail/detail?businessId=' + businessId
 		  })
 	  },
 	  

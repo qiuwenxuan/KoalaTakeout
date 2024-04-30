@@ -36,7 +36,7 @@
 			}
 		},
 		{
-			"path": "pages/detial/detial",
+			"path": "pages/detail/detail",
 			"style": {
 				"navigationBarTitleText": "商 家",
 				"enablePullDownRefresh": false

@@ -5,7 +5,7 @@
     "pages/me/me",
     "pages/login/login",
     "pages/register/register",
-    "pages/detial/detial",
+    "pages/detail/detail",
     "pages/confirm/confirm",
     "pages/orderComment/orderComment",
     "pages/address/address",

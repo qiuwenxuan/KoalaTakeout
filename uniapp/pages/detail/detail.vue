@@ -81,7 +81,7 @@
 				<view style="padding: 40rpx 40rpx 100rpx 40rpx">
 					<view style="text-align: right; margin-bottom: 10rpx; color: #999" v-if="cartList.length" @click="deleteAll">
 						<!-- v-if="cartList.length" 当cartList购物车没有商品数据时，不显示清空按钮 -->
-						<uni-icons style="position: relative; top: 4rpx" type="trash" size="16" color="#999"></uni-icons>
+						<uni-icons style="position: relative; top: 4rpx" type="trash" size="18" color="#999"></uni-icons>
 						清空购物车
 					</view>
 					<view v-for="(item, index) in cartList" :key="index" style="display: flex; margin-bottom: 20rpx" v-if="item.goods">
@@ -145,7 +145,11 @@ export default {
 			amount: {} // 商品总金额对象
 		};
 	},
-	onLoad(option) {
+	onShow() {
+		// onShow获取option三步走
+		let allPages = getCurrentPages(); //获取当前页面栈的实例；
+		let lastPages = allPages.length - 1; // 获得倒数第二个元素的索引；
+		let option = allPages[lastPages].options; // 获得上个页面传递的参数；
 		this.businessId = option.businessId;
 		this.load();
 		this.loadCart(); // 初始化加载购物车数据
@@ -153,9 +157,20 @@ export default {
 	methods: {
 		// 立即下单跳转页面方法
 		buttonClick() {
+			if (this.cartList.length === 0) {
+				uni.showToast({
+					icon: 'error',
+					title: '请选择商品'
+				});
+				return;
+			}
 			let xmOrders = uni.getStorageSync('xm-orders') || {}; // 首先定义一个变量获取缓存里的xmOrders对象
 			xmOrders.businessId = this.businessId; // 将addressId赋值到变量内
 			uni.setStorageSync('xm-orders', xmOrders); // 安全的将businessId存储到缓存xm-orders对象内
+			// 重定向
+			// uni.redirectTo({
+			// 	url: '/pages/confirm/confirm'
+			// });
 			uni.navigateTo({
 				url: '/pages/confirm/confirm'
 			});

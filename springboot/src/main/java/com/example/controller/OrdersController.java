@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.common.Result;
 import com.example.entity.Orders;
+import com.example.entity.OrdersDTO;
 import com.example.service.OrdersService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,15 @@ public class OrdersController {
 
     @Resource
     private OrdersService ordersService;
+
+    /**
+     * 新增
+     */
+    @PostMapping("/addOrder")
+    public Result addOrder(@RequestBody OrdersDTO ordersDTO) {
+        ordersService.addOrder(ordersDTO);
+        return Result.success();
+    }
 
     /**
      * 新增

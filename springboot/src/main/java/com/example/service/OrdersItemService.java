@@ -74,4 +74,7 @@ public class OrdersItemService {
         return PageInfo.of(list);
     }
 
+    public void deleteByOrderId(Integer orderId) {
+        ordersItemMapper.deleteByOrderId(orderId);
+    }
 }

@@ -96,6 +96,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniSegmentedControl: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control */ "uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue */ 109))
+    },
+    uniIcons: function () {
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 101))
+    },
+    uniTag: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-tag/components/uni-tag/uni-tag */ "uni_modules/uni-tag/components/uni-tag/uni-tag").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-tag/components/uni-tag/uni-tag.vue */ 116))
+    },
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
@@ -133,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -145,13 +174,131 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
-    return {};
+    return {
+      current: 0,
+      items: ['全部', '进行中', '待评价', '已退款'],
+      ordersList: [],
+      user: uni.getStorageSync('xm-user')
+    };
   },
-  methods: {}
+  onShow: function onShow() {
+    this.loadOrders();
+  },
+  methods: {
+    del: function del(orderId) {
+      var _this = this;
+      this.$request.del('/orders/delete/' + orderId).then(function (res) {
+        if (res.code === '200') {
+          uni.showToast({
+            icon: 'success',
+            title: '操作成功'
+          });
+          _this.loadOrders();
+        } else {
+          uni.showToast({
+            icon: 'error',
+            title: res.msg
+          });
+        }
+      });
+    },
+    changeStatus: function changeStatus(orders, status) {
+      var _this2 = this;
+      var form = JSON.parse(JSON.stringify(orders));
+      form.status = status;
+      this.$request.put('/orders/update', form).then(function (res) {
+        if (res.code === '200') {
+          uni.showToast({
+            icon: 'success',
+            title: '操作成功'
+          });
+          _this2.loadOrders();
+        } else {
+          uni.showToast({
+            icon: 'error',
+            title: res.msg
+          });
+        }
+      });
+    },
+    loadOrders: function loadOrders() {
+      var _this3 = this;
+      var status = '全部';
+      switch (this.current) {
+        case 0:
+          status = '全部';
+          break;
+        case 1:
+          status = '进行中';
+          break;
+        case 2:
+          status = '待评价';
+          break;
+        case 3:
+          status = '已退款';
+          break;
+      }
+      this.$request.get('/orders/selectAll', {
+        userId: this.user.id,
+        status: status
+      }).then(function (res) {
+        _this3.ordersList = res.data || [];
+      });
+    },
+    onClickItem: function onClickItem(e) {
+      if (this.current != e.currentIndex) {
+        this.current = e.currentIndex;
+        this.loadOrders();
+      }
+    }
+  }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ })
 

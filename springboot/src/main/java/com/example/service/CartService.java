@@ -126,7 +126,21 @@ public class CartService {
         return amountDTO;
     }
 
+    /**
+     * 删除某用户在某商家下的购物车内所有商品信息
+     *
+     **/
     public void deleteByBusiness(Integer businessId, Integer userId) {
         cartMapper.deleteByBusiness(businessId, userId);
+    }
+
+    /**
+     * 查询某用户在某商家下的所有购物车内商品信息
+     **/
+    public List<Cart> selectUserCart(Integer userId, Integer businessId) {
+        Cart cart = new Cart();
+        cart.setUserId(userId);
+        cart.setBusinessId(businessId);
+        return this.selectAll(cart);
     }
 }
