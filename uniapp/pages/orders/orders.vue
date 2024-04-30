@@ -29,7 +29,7 @@
 						<view style="flex: 1; text-align: right">
 							<uni-tag v-if="item.status === '待支付'" text="支付" size="large" type="primary" @click="changeStatus(item, '待发货')"></uni-tag>
 							<uni-tag
-								v-if="item.status === '待收货'"
+								v-if="item.status === '待发货'"
 								text="申请退款"
 								size="large"
 								type="error"
