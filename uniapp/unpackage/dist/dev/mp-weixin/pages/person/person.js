@@ -96,6 +96,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniForms: function () {
+      return Promise.all(/*! import() | uni_modules/uni-forms/components/uni-forms/uni-forms */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-forms/components/uni-forms/uni-forms")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-forms/components/uni-forms/uni-forms.vue */ 169))
+    },
+    uniFormsItem: function () {
+      return Promise.all(/*! import() | uni_modules/uni-forms/components/uni-forms-item/uni-forms-item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-forms/components/uni-forms-item/uni-forms-item")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.vue */ 185))
+    },
+    uniFilePicker: function () {
+      return Promise.all(/*! import() | uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker.vue */ 243))
+    },
+    uniEasyinput: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput */ "uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue */ 192))
+    },
+    uniDataCheckbox: function () {
+      return Promise.all(/*! import() | uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.vue */ 231))
+    },
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
@@ -133,7 +168,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -143,13 +178,114 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
-    return {};
+    return {
+      avatar: [],
+      form: {},
+      user: uni.getStorageSync('xm-user'),
+      imageStyles: {
+        height: 80,
+        // 边框高度
+        width: 80,
+        // 边框宽度
+        border: {
+          // 如果为 Boolean 值，可以控制边框显示与否
+          color: '#eee',
+          // 边框颜色
+          width: '1px',
+          // 边框宽度
+          style: 'solid',
+          // 边框样式
+          radius: '50%' // 边框圆角，支持百分比
+        }
+      },
+
+      range: [{
+        text: '男',
+        value: '男'
+      }, {
+        text: '女',
+        value: '女'
+      }]
+    };
   },
-  methods: {}
+  onLoad: function onLoad() {
+    this.form = JSON.parse(JSON.stringify(this.user));
+    this.avatar = [{
+      url: this.user.avatar
+    }];
+  },
+  methods: {
+    save: function save() {
+      var _this2 = this;
+      this.$request.put('/user/update', this.form).then(function (res) {
+        if (res.code === '200') {
+          uni.showToast({
+            icon: 'success',
+            title: '操作成功'
+          });
+          uni.setStorageSync('xm-user', _this2.form); // 更新浏览器缓存的用户信息
+        } else {
+          uni.showToast({
+            icon: 'error',
+            title: res.msg
+          });
+        }
+      });
+    },
+    handleAvatarUploadSuccess: function handleAvatarUploadSuccess(e) {
+      var _this = this;
+      var filePath = e.tempFilePaths[0];
+      uni.uploadFile({
+        url: _this.$baseUrl + '/files/upload',
+        //自己的后端接口（默认发送post请求）
+        filePath: filePath,
+        name: 'file',
+        //这里应为自己后端文件形参的名字
+        success: function success(res) {
+          console.log(res);
+          var url = JSON.parse(res.data || '{}').data;
+          _this.form.avatar = url;
+        }
+      });
+    }
+  }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ })
 

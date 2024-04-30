@@ -5,9 +5,12 @@ import Vue from 'vue'
 import './uni.promisify.adaptor'
 import '@/static/css/global.css'
 import request from '@/utils/request.js'
+import apiConfig from '@/config.js'
+const baseUrl = process.env.NODE_ENV === "development" ? apiConfig.dev.baseUrl : apiConfig.prod.baseUrl
 
 Vue.config.productionTip = false
 Vue.prototype.$request = request
+Vue.prototype.$baseUrl = baseUrl
 
 App.mpType = 'app'
 const app = new Vue({
