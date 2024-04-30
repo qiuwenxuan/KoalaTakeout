@@ -26,15 +26,15 @@
 		</view>
 		<!-- 商家信息结束 -->
 
-		<!-- 商家的分类商品列表 -->
+		<!-- 商家的分类商品列表和评价信息 -->
 		<view style="margin: 20rpx 0">
 			<view class="box" style="background-color: #fff; display: flex; border-radius: 10rpx; overflow: hidden; margin-bottom: 10rpx">
-				<view style="padding: 10rpx; background-color: #ffd100">全部商品</view>
-				<view style="padding: 10rpx">评价</view>
+				<view style="padding: 10rpx" :class="{ active: current === '全部商品' }" @click="current = '全部商品'">全部商品</view>
+				<view style="padding: 10rpx; width: fit-content" :class="{ active: current === '评价' }" @click="current = '评价'">评价</view>
 			</view>
 
 			<!-- 分类商品展示 -->
-			<view class="box" style="display: flex; background-color: #fff; border-radius: 10rpx; padding: 10rpx">
+			<view class="box" style="display: flex; background-color: #fff; border-radius: 10rpx; padding: 10rpx" v-if="current === '全部商品'">
 				<view style="width: 200rpx; text-align: center">
 					<!-- 动态绑定class，默认商品分类样式为category-item；当item.id === activeCategoryId（点击了商品分类）商品样式变成了category-active -->
 					<view
@@ -76,6 +76,25 @@
 					</view>
 				</scroll-view>
 			</view>
+
+			<!-- 评价列表 -->
+			<scroll-view scroll-y="true" style="height: calc(100vh - 525rpx)" v-if="current === '评价'">
+				<view class="box">
+					<view v-for="item in commentList" :key="item.id" style="border-bottom: 2rpx solid #eee; padding: 20rpx 0">
+						<view style="display: flex; grid-gap: 20rpx">
+							<view style="display: flex; flex-direction: column; align-items: center; grid-gap: 10rpx">
+								<image :src="item.userAvatar" style="width: 120rpx; border-radius: 50%" mode="widthFix"></image>
+								<view>{{ item.userName }}</view>
+							</view>
+							<view style="flex: 1; display: flex; flex-direction: column; justify-content: space-between">
+								<view style="flex: 1; padding-top: 10rpx; font-size: 24rpx">{{ item.content }}</view>
+								<uni-rate :value="item.star" readonly></uni-rate>
+							</view>
+							<view style="font-size: 24rpx; color: #888; display: flex; align-items: flex-end">{{ item.time }}</view>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
 		</view>
 		<!-- 商家的分类商品列表结束 -->
 
@@ -149,7 +168,9 @@ export default {
 			],
 			user: uni.getStorageSync('xm-user'), // 登录时缓存的user信息
 			cartList: [], // 购物车列表
-			amount: {} // 商品总金额对象
+			amount: {}, // 商品总金额对象
+			current: '全部商品',
+			commentList: []
 		};
 	},
 	onShow() {
@@ -275,6 +296,10 @@ export default {
 					// 调用loadGoods()方法将当前activeCategoryId设置为高亮显示
 					this.loadGoods(this.activeCategoryId);
 				});
+
+			this.$request.get('/comment/selectAll', { userId: this.user.id, businessId: this.businessId }).then((res) => {
+				this.commentList = res.data || [];
+			});
 		},
 		// 点击执行函数loadGoods
 		loadGoods(categoryId) {
@@ -320,5 +345,9 @@ export default {
 	color: #fff;
 	font-size: 30rpx;
 	border-radius: 5rpx;
+}
+
+.active {
+	background-color: #ffd100;
 }
 </style>

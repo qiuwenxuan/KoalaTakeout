@@ -292,6 +292,31 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 默认商品分类样式 */
 .category-item {
 	padding: 15rpx;
@@ -318,5 +343,8 @@
 	color: #fff;
 	font-size: 30rpx;
 	border-radius: 5rpx;
+}
+.active {
+	background-color: #ffd100;
 }
 

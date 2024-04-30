@@ -3,6 +3,7 @@
   "enablePullDownRefresh": false,
   "usingComponents": {
     "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "uni-rate": "/uni_modules/uni-rate/components/uni-rate/uni-rate",
     "uni-goods-nav": "/uni_modules/uni-goods-nav/components/uni-goods-nav/uni-goods-nav",
     "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
     "uni-number-box": "/uni_modules/uni-number-box/components/uni-number-box/uni-number-box"

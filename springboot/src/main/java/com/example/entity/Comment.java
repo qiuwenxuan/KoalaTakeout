@@ -49,6 +49,10 @@ public class Comment implements Serializable {
      * 订单号
      **/
     private String OrderNo;
+    /**
+     * 用户头像
+     **/
+    private String userAvatar;
 
 
     public Integer getId() {
@@ -130,5 +134,13 @@ public class Comment implements Serializable {
 
     public void setOrderNo(String orderNo) {
         OrderNo = orderNo;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 }
