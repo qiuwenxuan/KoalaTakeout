@@ -261,6 +261,11 @@ var _default = {
     this.load();
   },
   methods: {
+    goBusiness: function goBusiness(type) {
+      uni.navigateTo({
+        url: '/pages/categoryBusiness/categoryBusiness?type=' + type
+      });
+    },
     search: function search(res) {
       var value = res.value;
       uni.navigateTo({

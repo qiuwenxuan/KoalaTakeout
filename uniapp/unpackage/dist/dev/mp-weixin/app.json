@@ -17,7 +17,8 @@
     "pages/aboutUs/aboutUs",
     "pages/agreement/agreement",
     "pages/person/person",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/categoryBusiness/categoryBusiness"
   ],
   "subPackages": [],
   "window": {

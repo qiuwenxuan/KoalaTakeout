@@ -13278,7 +13278,13 @@ var _default = {
   }, {
     "path": "pages/search/search",
     "style": {
-      "navigationBarTitleText": "",
+      "navigationBarTitleText": "搜 索",
+      "enablePullDownRefresh": false
+    }
+  }, {
+    "path": "pages/categoryBusiness/categoryBusiness",
+    "style": {
+      "navigationBarTitleText": "商家分类",
       "enablePullDownRefresh": false
     }
   }],

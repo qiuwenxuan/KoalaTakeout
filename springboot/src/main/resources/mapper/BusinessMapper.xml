@@ -102,6 +102,9 @@
             <if test="status != null">
                 and status = #{status}
             </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
         </where>
         order by id desc
     </select>

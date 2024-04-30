@@ -120,11 +120,17 @@
 			}
 		},
 		{
-			"path" : "pages/search/search",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜 索",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/categoryBusiness/categoryBusiness",
+			"style": {
+				"navigationBarTitleText": "商家分类",
+				"enablePullDownRefresh": false
 			}
 		}
 	],
