@@ -70,6 +70,10 @@ public class Goods {
      * 分类名称
      **/
     private String categoryName; // 需要外连接查找category的name属性
+    /**
+     * 商品销售数量
+     **/
+    private Integer saleCount;
 
     public Integer getId() {
         return id;
@@ -197,5 +201,13 @@ public class Goods {
 
     public void setActualPrice(BigDecimal actualPrice) {
         this.actualPrice = actualPrice;
+    }
+
+    public Integer getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Integer saleCount) {
+        this.saleCount = saleCount;
     }
 }

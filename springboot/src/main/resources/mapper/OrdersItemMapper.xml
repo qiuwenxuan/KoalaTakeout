@@ -5,20 +5,21 @@
 <mapper namespace="com.example.mapper.OrdersItemMapper">
 
     <sql id="Base_Column_List">
-        id,order_id,goods_name,goods_img,price,num
+        id,order_id,goods_name,goods_img,price,num,goods_id
     </sql>
 
     <select id="selectAll" resultType="com.example.entity.OrdersItem">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from orders_item
         <where>
-            <if test="id != null"> and id = #{id}</if>
-            <if test="orderId != null"> and order_id = #{orderId}</if>
-            <if test="goodsName != null"> and goods_name = #{goodsName}</if>
-            <if test="goodsImg != null"> and goods_img like concat('%', #{goodsImg}, '%')</if>
-            <if test="price != null"> and price = #{price}</if>
-            <if test="num != null"> and num = #{num}</if>
+            <if test="id != null">and id = #{id}</if>
+            <if test="orderId != null">and order_id = #{orderId}</if>
+            <if test="goodsName != null">and goods_name = #{goodsName}</if>
+            <if test="goodsImg != null">and goods_img like concat('%', #{goodsImg}, '%')</if>
+            <if test="price != null">and price = #{price}</if>
+            <if test="num != null">and num = #{num}</if>
+            <if test="goodsId != null">and goods_id = #{goodsId}</if>
         </where>
         order by id desc
     </select>
@@ -44,6 +45,7 @@
             <if test="goodsImg != null">goods_img,</if>
             <if test="price != null">price,</if>
             <if test="num != null">num,</if>
+            <if test="goodsId != null">goods_id,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -52,6 +54,7 @@
             <if test="goodsImg != null">#{goodsImg},</if>
             <if test="price != null">#{price},</if>
             <if test="num != null">#{num},</if>
+            <if test="goodsId != null">#{goodsId},</if>
         </trim>
     </insert>
 
@@ -72,6 +75,9 @@
             </if>
             <if test="num != null">
                 num = #{num},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
             </if>
         </set>
         where id = #{id}

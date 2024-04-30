@@ -33,6 +33,10 @@ public class OrdersItem implements Serializable {
      * 购买数量
      */
     private Integer num;
+    /**
+     * 商品ID
+     */
+    private Integer goodsId;
 
     public Integer getId() {
         return id;
@@ -82,4 +86,11 @@ public class OrdersItem implements Serializable {
         this.num = num;
     }
 
+    public Integer getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
+    }
 }

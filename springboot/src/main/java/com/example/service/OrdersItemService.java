@@ -74,7 +74,28 @@ public class OrdersItemService {
         return PageInfo.of(list);
     }
 
+    /**
+     * 根据订单号删除订单详情
+     **/
     public void deleteByOrderId(Integer orderId) {
         ordersItemMapper.deleteByOrderId(orderId);
+    }
+
+    /**
+     * 根据订单号查询订单详情
+     **/
+    public List<OrdersItem> selectByOrderId(Integer ordersId) {
+        OrdersItem ordersItem = new OrdersItem();
+        ordersItem.setOrderId(ordersId);
+        return ordersItemMapper.selectAll(ordersItem);
+    }
+
+    /**
+     * 根据goodsId查询订单详情
+     **/
+    public List<OrdersItem> selectByGoodsId(Integer goods) {
+        OrdersItem ordersItem = new OrdersItem();
+        ordersItem.setGoodsId(goods);
+        return ordersItemMapper.selectAll(ordersItem);
     }
 }

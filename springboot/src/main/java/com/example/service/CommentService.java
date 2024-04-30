@@ -107,4 +107,10 @@ public class CommentService {
         return PageInfo.of(list);
     }
 
+    /**
+     * 根据businessId查询商家所有评论
+     **/
+    public List<Comment> selectByBusinessId(Integer businessId) {
+        return commentMapper.selectByBusinessId(businessId);
+    }
 }

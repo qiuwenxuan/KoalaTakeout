@@ -1,10 +1,9 @@
 package com.example.service;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.example.common.enums.OrderStatusEnum;
 import com.example.common.enums.RoleEnum;
-import com.example.entity.Account;
-import com.example.entity.Category;
-import com.example.entity.Goods;
+import com.example.entity.*;
 import com.example.mapper.GoodsMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +28,10 @@ public class GoodsService {
     private BusinessService businessService;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private OrdersItemService ordersItemService;
+    @Resource
+    private OrdersService ordersService;
 
     /**
      * 新增
@@ -124,9 +128,29 @@ public class GoodsService {
         if (ObjectUtil.isEmpty(goods)) {
             return null;
         }
+        int saleCount = 0; // 订单销售额
         // 设置商品实际价格 = 商品价格*打折优惠,保留两位小数向上取整
         BigDecimal actualPrice = goods.getPrice().multiply(BigDecimal.valueOf(goods.getDiscount())).setScale(2, RoundingMode.UP);
         goods.setActualPrice(actualPrice);
+
+        List<OrdersItem> ordersItemList = ordersItemService.selectByGoodsId(goods.getId());
+        // 定义一个list集合存储有效的OrdersItem(及状态为“待评价”/“已完成”)
+        List<OrdersItem> usageOrdersItemList = new ArrayList<>();
+        for (OrdersItem ordersItem : ordersItemList) {
+            Integer orderId = ordersItem.getOrderId();
+            Orders orders = ordersService.selectById(orderId);
+            // 如果orders为空，则直接执行下一条循环
+            if (ObjectUtil.isEmpty(orders)) {
+                continue;
+            }
+            // 如果orders的状态为有效订单，则将ordersItem订单详情放到有效集合内
+            if (OrderStatusEnum.NO_COMMENT.getValue().equals(orders.getStatus()) || OrderStatusEnum.DONE.getValue().equals(orders.getStatus())) {
+                usageOrdersItemList.add(ordersItem);
+            }
+        }
+        // 聚合函数查出有效订单集合usageOrdersItemList内的OrdersItem订单的商品数量
+        saleCount += usageOrdersItemList.stream().map(OrdersItem::getNum).reduce(Integer::sum).orElse(0);
+        goods.setSaleCount(saleCount);
         return goods;
     }
 

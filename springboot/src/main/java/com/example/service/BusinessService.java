@@ -3,9 +3,7 @@ package com.example.service;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
-import com.example.entity.Account;
-import com.example.entity.Business;
-import com.example.entity.Collect;
+import com.example.entity.*;
 import com.example.exception.CustomException;
 import com.example.mapper.BusinessMapper;
 import com.example.utils.TokenUtils;
@@ -15,6 +13,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +28,12 @@ public class BusinessService {
     private BusinessMapper businessMapper;
     @Resource
     private CollectService collectService;
+    @Resource
+    private CommentService commentService;
+    @Resource
+    private OrdersService ordersService;
+    @Resource
+    private OrdersItemService ordersItemService;
 
     /**
      * 新增商家
@@ -82,7 +88,33 @@ public class BusinessService {
      * 查询所有
      */
     public List<Business> selectAll(Business business) {
-        return businessMapper.selectAll(business);
+        List<Business> businesses = businessMapper.selectAll(business);
+        // 给business商家对象设置平均评分和商品销售数量
+        for (Business b : businesses) {
+            // 设置商品的销售总数和平均评分
+            wrapBusiness(b);
+        }
+        return businesses;
+    }
+
+    /**
+     * 设置商品的销售总数和平均评分
+     **/
+    private void wrapBusiness(Business b) {
+        List<Comment> commentList = commentService.selectByBusinessId(b.getId());
+        double sum = commentList.stream().map(Comment::getStar).reduce(Double::sum).orElse(0D) + 5D; // 总评分
+        double score = BigDecimal.valueOf(sum).divide(BigDecimal.valueOf(commentList.size() + 1), 1, RoundingMode.UP).doubleValue(); // 平均分数
+        b.setScore(score);
+
+        // 查询商家所有的有效订单
+        List<Orders> orderList = ordersService.selectUsageByBusinessId(b.getId());
+        int nums = 0;
+        for (Orders order : orderList) {
+            List<OrdersItem> ordersItemList = ordersItemService.selectByOrderId(order.getId());
+            // 聚合函数查出订单的商品数量
+            nums += ordersItemList.stream().map(OrdersItem::getNum).reduce(Integer::sum).orElse(0);
+        }
+        b.setNums(nums);
     }
 
     /**

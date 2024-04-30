@@ -15,6 +15,14 @@ public class Business extends Account implements Serializable {
     private String timeRange;
     private String type;
     /**
+     * 分数（所有评分的平均值）
+     **/
+    private Double score;
+    /**
+     * 订单总销售数量
+     **/
+    private Integer nums;
+    /**
      * 是否收藏
      **/
     private boolean isCollect;
@@ -81,5 +89,21 @@ public class Business extends Account implements Serializable {
 
     public void setIsCollect(boolean isCollect) {
         this.isCollect = isCollect;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public Integer getNums() {
+        return nums;
+    }
+
+    public void setNums(Integer nums) {
+        this.nums = nums;
     }
 }
