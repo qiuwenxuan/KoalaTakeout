@@ -118,6 +118,14 @@
 				"navigationBarTitleText": "个人信息",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path" : "pages/search/search",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {

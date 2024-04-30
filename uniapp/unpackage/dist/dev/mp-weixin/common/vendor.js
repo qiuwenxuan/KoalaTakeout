@@ -13275,6 +13275,12 @@ var _default = {
       "navigationBarTitleText": "个人信息",
       "enablePullDownRefresh": false
     }
+  }, {
+    "path": "pages/search/search",
+    "style": {
+      "navigationBarTitleText": "",
+      "enablePullDownRefresh": false
+    }
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
@@ -20033,6 +20039,66 @@ module.exports = JSON.parse("{\"uni-load-more.contentdown\":\"上拉显示更多
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"uni-load-more.contentdown\":\"上拉顯示更多\",\"uni-load-more.contentrefresh\":\"正在加載...\",\"uni-load-more.contentnomore\":\"沒有更多數據了\"}");
+
+/***/ }),
+
+/***/ 294:
+/*!***********************************************************************************************************!*\
+  !*** E:/workspace/KoalaTakeout/uniapp/uni_modules/uni-search-bar/components/uni-search-bar/i18n/index.js ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 295));
+var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 296));
+var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 297));
+var _default = {
+  en: _en.default,
+  'zh-Hans': _zhHans.default,
+  'zh-Hant': _zhHant.default
+};
+exports.default = _default;
+
+/***/ }),
+
+/***/ 295:
+/*!**********************************************************************************************************!*\
+  !*** E:/workspace/KoalaTakeout/uniapp/uni_modules/uni-search-bar/components/uni-search-bar/i18n/en.json ***!
+  \**********************************************************************************************************/
+/*! exports provided: uni-search-bar.cancel, uni-search-bar.placeholder, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"uni-search-bar.cancel\":\"cancel\",\"uni-search-bar.placeholder\":\"Search enter content\"}");
+
+/***/ }),
+
+/***/ 296:
+/*!***************************************************************************************************************!*\
+  !*** E:/workspace/KoalaTakeout/uniapp/uni_modules/uni-search-bar/components/uni-search-bar/i18n/zh-Hans.json ***!
+  \***************************************************************************************************************/
+/*! exports provided: uni-search-bar.cancel, uni-search-bar.placeholder, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"uni-search-bar.cancel\":\"取消\",\"uni-search-bar.placeholder\":\"请输入搜索内容\"}");
+
+/***/ }),
+
+/***/ 297:
+/*!***************************************************************************************************************!*\
+  !*** E:/workspace/KoalaTakeout/uniapp/uni_modules/uni-search-bar/components/uni-search-bar/i18n/zh-Hant.json ***!
+  \***************************************************************************************************************/
+/*! exports provided: uni-search-bar.cancel, uni-search-bar.placeholder, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"uni-search-bar.cancel\":\"取消\",\"uni-search-bar.placeholder\":\"請輸入搜索內容\"}");
 
 /***/ }),
 

@@ -1,6 +1,9 @@
 <template>
 	<view style="padding: 40rpx">
 		<view style="padding: 20rpx; margin: 80rpx 0; background-color: #fff; box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1); border-radius: 10rpx">
+			<view>
+				<view style="text-align: center; font-size: 50rpx; font-weight: bold; margin-bottom: 20rpx">考拉外卖</view>
+			</view>
 			<view style="margin: 50rpx 30rpx; font-size: 40rpx">欢迎登录</view>
 			<!-- :rules="rules" validateTrigger='blur' blur表示表单失焦的时候显示规则提醒，submit表示表单提交的时候显示规则提醒 -->
 			<uni-forms ref="form" :modelValue="form" :rules="rules" validateTrigger="blur">

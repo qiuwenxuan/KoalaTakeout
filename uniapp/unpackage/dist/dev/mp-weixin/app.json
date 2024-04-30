@@ -16,7 +16,8 @@
     "pages/commentCenter/commentCenter",
     "pages/aboutUs/aboutUs",
     "pages/agreement/agreement",
-    "pages/person/person"
+    "pages/person/person",
+    "pages/search/search"
   ],
   "subPackages": [],
   "window": {

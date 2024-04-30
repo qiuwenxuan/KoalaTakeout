@@ -72,3 +72,9 @@ gradle/wrapper/gradle-wrapper.properties
 /.nb-gradle/
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+# uniapp框架
+node_modules/
+.project
+unpackage/
+.DS_Store
