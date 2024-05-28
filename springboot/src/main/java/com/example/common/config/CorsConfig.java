@@ -8,6 +8,7 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * 跨域配置
+ *  将上述设置应用到所有以“/”开头的接口上。这意味着，所有以“/”开头的请求都将受到上述跨域设置的保护。
  */
 
 @Configuration

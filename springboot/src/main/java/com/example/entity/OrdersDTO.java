@@ -1,7 +1,7 @@
 package com.example.entity;
 
 /**
- * 下单数据传输封装类
+ * 订单下单信息封装类
  **/
 public class OrdersDTO {
     // 下单的商家ID

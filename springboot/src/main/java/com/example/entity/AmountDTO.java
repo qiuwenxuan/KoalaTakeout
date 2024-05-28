@@ -3,7 +3,7 @@ package com.example.entity;
 import java.math.BigDecimal;
 
 /**
- * 价格信息传输封装类
+ * 计价类
  **/
 public class AmountDTO {
     // BigDecimal是Java中的一个类，用于表示任意精度的十进制数。它可以处理非常大或非常小的数字，以及需要高精度计算的场景

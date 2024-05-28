@@ -48,7 +48,6 @@ export default {
 	onShow() {
 		this.loadAddress();
 	},
-
 	methods: {
 		// 选择地址是调用函数，将addressId存储到xm-orders缓存对象内，并返回页面
 		selectAddress(addressId) {

@@ -84,7 +84,7 @@
 		</view>
 
 		<!-- 提交按钮 -->
-		<view v-if="amount.discount" class="box" style="position: fixed; bottom: 0; width: 100%; left: -40rpx">
+		<view class="box" style="position: fixed; bottom: 0; width: 100%; left: -40rpx">
 			<view style="text-align: right">
 				<text>已优惠</text>
 				<text style="color: red">￥{{ amount.discount }}</text>

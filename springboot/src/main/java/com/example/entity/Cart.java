@@ -1,5 +1,9 @@
 package com.example.entity;
 
+/**
+ * 购物车实体类
+ **/
+
 public class Cart {
     /**
      * ID

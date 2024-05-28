@@ -136,12 +136,12 @@ public class BusinessService {
         List<Business> list = this.selectAll(params);
         Business business = list.size() == 0 ? null : list.get(0);
         // 当business不为空
-        if (ObjectUtil.isNotEmpty(business)) {
-            Account currentUser = TokenUtils.getCurrentUser();
-            Collect collect = collectService.selectByUserIdAndBusinessId(currentUser.getId(), id);
-            // 如果查询到用户收藏了某商家，则返回该商家的isCollect为true
-            business.setIsCollect(ObjectUtil.isNotEmpty(collect));
-        }
+//        if (ObjectUtil.isNotEmpty(business)) {
+//            Account currentUser = TokenUtils.getCurrentUser();
+//            Collect collect = collectService.selectByUserIdAndBusinessId(currentUser.getId(), id);
+//            // 如果查询到用户收藏了某商家，则返回该商家的isCollect为true
+//            business.setIsCollect(ObjectUtil.isNotEmpty(collect));
+//        }
 
         return business;
     }
